@@ -17,6 +17,8 @@ add_subdirectory_ifdef(CONFIG_RENESAS_RX_DTC renesas_rx_dtc)
 add_subdirectory_ifdef(CONFIG_RENESAS_RX_EXTERNAL_INTERRUPT renesas_rx_external_interrupt)
 add_subdirectory_ifdef(CONFIG_STM32N6_AXISRAM stm32n6_axisram)
 add_subdirectory_ifdef(CONFIG_TIMEAWARE_GPIO timeaware_gpio)
+add_subdirectory_ifdef(CONFIG_ANX7533	 anx7533)
+add_subdirectory_ifdef(CONFIG_ANX7327	 anx7327)
 # zephyr-keep-sorted-stop
 
 add_subdirectory(interconn)
