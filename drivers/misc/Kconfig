@@ -26,6 +26,7 @@ source "drivers/misc/stm32n6_axisram/Kconfig"
 source "drivers/misc/timeaware_gpio/Kconfig"
 source "drivers/misc/anx7533/Kconfig"
 source "drivers/misc/anx7327/Kconfig"
+source "drivers/misc/usb3803/Kconfig"
 # zephyr-keep-sorted-stop
 
 endmenu
