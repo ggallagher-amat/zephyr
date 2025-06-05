@@ -26,6 +26,7 @@ source "drivers/misc/nxp_inputmux/Kconfig"
 source "drivers/misc/nxp_imx93_mediamix/Kconfig"
 source "drivers/misc/anx7533/Kconfig"
 source "drivers/misc/anx7327/Kconfig"
+source "drivers/misc/usb3803/Kconfig"
 # zephyr-keep-sorted-stop
 
 endmenu
