@@ -25,6 +25,7 @@ source "drivers/misc/renesas_rx_external_interrupt/Kconfig"
 source "drivers/misc/stm32n6_axisram/Kconfig"
 source "drivers/misc/timeaware_gpio/Kconfig"
 source "drivers/misc/anx7533/Kconfig"
+source "drivers/misc/anx7327/Kconfig"
 # zephyr-keep-sorted-stop
 
 endmenu
