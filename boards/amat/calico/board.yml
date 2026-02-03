@@ -2,4 +2,4 @@ board:
   name: calico
   vendor: amat
   socs:
-    - name: apollo4p
+    - name: 'apollo4p'

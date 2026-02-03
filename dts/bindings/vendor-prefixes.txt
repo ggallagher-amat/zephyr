@@ -47,6 +47,7 @@ alps	Alps Electric Co., Ltd.
 alt	Altus-Escon-Company BV
 altr	Altera Corp.
 amarula	Amarula Solutions
+amat	Applied Materials
 amazon	Amazon.com, Inc.
 ambiq	Ambiq Micro, Inc.
 amcc	Applied Micro Circuits Corporation (APM, formally AMCC)
