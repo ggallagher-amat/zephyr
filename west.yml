@@ -231,7 +231,7 @@ manifest:
         - hal
     - name: hal_renesas
       path: modules/hal/renesas
-      revision: 14f3c2bdd307009eaf9520cdfda2cbabb81e8d10
+      revision: f30a54e266292fd0b958b49ef24eb1ca2afd1981
       groups:
         - hal
     - name: hal_rpi_pico
@@ -245,7 +245,7 @@ manifest:
       groups:
         - hal
     - name: hal_silabs
-      revision: 6bde23d62ffd16347d1696ba15db92b070907828
+      revision: ea72a5dd0fa0ed5254a27e9181abf42ae21782f7
       path: modules/hal/silabs
       groups:
         - hal
@@ -364,7 +364,7 @@ manifest:
       path: modules/lib/picolibc
       revision: ca8b6ebba5226a75545e57a140443168a26ba664
     - name: psa-arch-tests
-      revision: d70b2c7072cedf0f14724211d2122ef07b98720c
+      revision: 6e8219237435112df33bbcf37b7f5657fcfb9cff
       path: modules/tee/tf-m/psa-arch-tests
       groups:
         - testing
