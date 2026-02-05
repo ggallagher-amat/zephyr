@@ -1,0 +1,14 @@
+description: GPIO pin for general use, using them for on or off control
+
+compatible: "amat,gen_gpios"
+
+child-binding:
+  description: The GPIOs controlling the pin
+  properties:
+    gpios:
+     type: phandle-array
+     required: true
+    gpio-name:
+      type: string
+      description: |
+        Human readable string describing the gpio.
