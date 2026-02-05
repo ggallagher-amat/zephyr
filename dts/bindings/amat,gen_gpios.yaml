@@ -1,0 +1,14 @@
+description: GPIO pin to switch a power output on or off
+
+compatible: "amat,pwr_gpios"
+
+child-binding:
+  description: The GPIOs controlling the pins for power
+  properties:
+    gpios:
+     type: phandle-array
+     required: true
+    gpio-name:
+      type: string
+      description: |
+        Human readable string describing the pwr gpio.
