@@ -263,11 +263,11 @@ ARM arch:
     - arch.arm
 
 ARM64 arch:
-  status: odd fixes
+  status: maintained
+  maintainers:
+    - wearyzen
   collaborators:
     - npitre
-    - wearyzen
-    - ithinuel
     - JiafeiPan
   files:
     - arch/arm64/
@@ -436,6 +436,20 @@ Binary Descriptors:
   tests:
     - bindesc
 
+Biometrics Drivers:
+  status: maintained
+  maintainers:
+    - heronet
+  files:
+    - drivers/biometrics/
+    - dts/bindings/biometrics/
+    - include/zephyr/drivers/biometrics.h
+    - samples/drivers/biometrics/
+    - tests/drivers/biometrics/
+    - doc/hardware/peripherals/biometrics.rst
+  labels:
+    - "area: Biometrics"
+
 Bluetooth Audio:
   status: maintained
   maintainers:
@@ -458,6 +472,7 @@ Bluetooth Audio:
     - tests/bsim/bluetooth/audio_samples/
     - tests/bsim/bluetooth/tester/src/audio/
     - tests/bluetooth/shell/audio.conf
+    - tests/bluetooth/shell/usb_audio.overlay
     - tests/bluetooth/tester/overlay-le-audio.conf
     - tests/bluetooth/tester/overlay-bt_ll_sw_split.conf
     - tests/bluetooth/tester/src/audio/
@@ -617,6 +632,7 @@ Bluetooth Host:
     - tests/bluetooth/qualification/
     - tests/bluetooth/shell/audio.conf
     - tests/bluetooth/shell/mesh.conf
+    - tests/bluetooth/shell/usb_audio.overlay
     - tests/bluetooth/tester/
     - tests/bsim/bluetooth/audio/
     - tests/bsim/bluetooth/audio_samples/
@@ -1523,6 +1539,7 @@ Documentation Infrastructure:
     - iuliana-prodan
     - dbaluta
     - abonislawski
+    - serhiy-katsyuba-intel
   files:
     - drivers/dai/
     - doc/hardware/peripherals/audio/dai.rst
@@ -1762,7 +1779,6 @@ Documentation Infrastructure:
   maintainers:
     - bjarki-andreasen
   collaborators:
-    - tomi-font
     - fabiobaltieri
     - ubieda
   files:
@@ -3072,6 +3088,7 @@ Intel Platforms (Xtensa):
     - marcinszkudlinski
     - nashif
     - abonislawski
+    - serhiy-katsyuba-intel
   files:
     - boards/intel/adsp/
     - soc/intel/intel_adsp/
@@ -3080,6 +3097,8 @@ Intel Platforms (Xtensa):
     - samples/boards/intel/adsp/
     - dts/bindings/*/intel,adsp*
     - scripts/west_commands/runners/intel_adsp.py
+    - drivers/counter/counter_ace_v1x*
+    - drivers/counter/Kconfig.ace
   labels:
     - "platform: Intel ADSP"
 
@@ -3437,6 +3456,10 @@ Microchip SAM Platforms:
     - nandojve
   collaborators:
     - ArunMCHP
+    - fabin-mchp
+    - Farsin-Nasar-Microchip
+    - mchp-asif
+    - sunil-abraham
     - stephanosio
   files:
     - boards/atmel/
@@ -5081,11 +5104,15 @@ TI K3 Platforms:
     - gramsay0
     - dnltz
     - vaishnavachath
+    - natto1784
+    - Kronosblaster
   files:
     - boards/ti/*am62*/
     - drivers/*/*davinci*
     - drivers/*/*omap*
     - drivers/*/*ti_k3*
+    - drivers/*/*tisci*
+    - drivers/*/*secproxy*
     - dts/arm/ti/am6*
     - dts/arm/ti/j7*
     - dts/bindings/*/ti,k3*
