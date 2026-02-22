@@ -17,18 +17,17 @@
 
 	aliases {
 		led0 = &led0;
-		pwr-1v0-en = &ap_pwr_1v0_en;
 	};
 
-	pwr_gpios {
+/*
+	gen_gpios {
 		compatible = "amat,gen_gpios";
-		
 		ap_pwr_1v0_en: ap_pwr_1v0_en {
 			gpios = <&gpio64_95 19 GPIO_ACTIVE_HIGH>;
-			label = "EN_P1V0";
 		};
 	};
-		
+*/
+
 	/* Regulators */
 	ap_pwr_1v8_video_en {
 		compatible = "regulator-fixed";
@@ -46,24 +45,27 @@
 		compatible = "regulator-fixed";
 		regulator-name = "EN_N2V0";
 		enable-gpios = <&gpio64_95 18 GPIO_ACTIVE_HIGH>;
+		regulator-boot-on;
 	};
 	ap_pwr_2v5_en {
 		compatible = "regulator-fixed";
 		regulator-name = "EN_P2V5";
 		enable-gpios = <&gpio64_95 17 GPIO_ACTIVE_HIGH>;
+		regulator-boot-on;
 	};
-	ap_pwr_1v8_en {
+	ap_disp_pwr_1v8_en {
 		compatible = "regulator-fixed";
 		regulator-name = "EN_P1V8";
 		enable-gpios = <&gpio64_95 15 GPIO_ACTIVE_HIGH>;
+		regulator-boot-on;
 	};
 	ap_pwr_1v2_en {
 		compatible = "regulator-fixed";
 		regulator-name = "EN_P1V2";
 		enable-gpios = <&gpio64_95 14 GPIO_ACTIVE_HIGH>;
+		regulator-boot-on;
 	};
-	
-	
+
 	leds {
 		compatible = "gpio-leds";
 		led0: led_0 {
@@ -102,18 +104,19 @@
 	clk-source = <3>;
 };
 
-&iom5 {
-	i2c5: i2c {
-		pinctrl-0 = <&i2c5_default>;
+&iom3 {
+	i2c3: i2c {
+		pinctrl-0 = <&i2c3_default>;
 		pinctrl-names = "default";
 		clock-frequency = <I2C_BITRATE_STANDARD>;
-		scl-gpios = <&gpio32_63 15 (GPIO_OPEN_DRAIN | GPIO_PULL_UP)>;
-		sda-gpios = <&gpio32_63 16 (GPIO_OPEN_DRAIN | GPIO_PULL_UP)>;
+		scl-gpios = <&gpio0_31 31 (GPIO_OPEN_DRAIN | GPIO_PULL_UP)>;
+		sda-gpios = <&gpio32_63 0 (GPIO_OPEN_DRAIN | GPIO_PULL_UP)>;
 
 		anx7533_0@54 {
 			compatible = "analogix,anx7533";
 			vid-rst-pin-gpios = <&gpio32_63 1 GPIO_ACTIVE_HIGH>;
 			vid-en-pin-gpios = <&gpio64_95 10 GPIO_ACTIVE_HIGH>;
+			pwr-1v0-en-gpios = <&gpio64_95 19 GPIO_ACTIVE_HIGH>;
 			vid-int-pin-gpios = <&gpio0_31 30 (GPIO_PULL_UP | GPIO_ACTIVE_HIGH)>;
 			reg = <0x54>;
 			reg-offset = <0x52>;
@@ -131,7 +134,7 @@
 		clock-frequency = <I2C_BITRATE_STANDARD>;
 		scl-gpios = <&gpio32_63 29 (GPIO_OPEN_DRAIN | GPIO_PULL_UP)>;
 		sda-gpios = <&gpio32_63 30 (GPIO_OPEN_DRAIN | GPIO_PULL_UP)>;
-		
+
 		anx7327_0@58 {
 			compatible = "analogix,anx7327";
 			int-pin-gpios = <&gpio0_31 10 (GPIO_PULL_UP | GPIO_ACTIVE_HIGH)>;
