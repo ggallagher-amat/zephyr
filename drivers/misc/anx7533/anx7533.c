@@ -62,6 +62,7 @@ struct anx7533_config {
 	uint16_t reg_offset;
 	uint16_t reg_offset_rd;
 	struct gpio_dt_spec vid_en_pin;
+	struct gpio_dt_spec pwr_en_pin;
 	struct gpio_dt_spec vid_rst_pin;
 	struct gpio_dt_spec vid_int_pin;
 };
@@ -314,37 +315,34 @@ void anx7533_chip_poweron(const struct device *dev)
 	struct anx7533_priv *priv = (struct anx7533_priv *)(dev->data);
 	const struct anx7533_config *cfg = dev->config;
 
-	LOG_ERR("anx7533 chip power on\n");
+	LOG_INF("anx7533 chip power on\n");
 
-	gpio_pin_set_dt(&cfg->vid_rst_pin, 0);
-	k_busy_wait(ANX7533_RESET_DOWN_DELAY*1000);
-	gpio_pin_set_dt(&cfg->vid_en_pin, 0);
-	k_busy_wait(ANX7533_CHIPPOWER_DOWN_DELAY*1000);
-
+	k_msleep(4);
+	gpio_pin_set_dt(&cfg->pwr_en_pin, 1);
+	k_msleep(10);
 	gpio_pin_set_dt(&cfg->vid_en_pin, 1);
-	k_busy_wait(ANX7533_CHIPPOWER_UP_DELAY*1000);
+	k_msleep(45);
 	gpio_pin_set_dt(&cfg->vid_rst_pin, 1);
-	k_busy_wait(ANX7533_RESET_UP_DELAY*1000);
 
 	priv->chip_power_status = VALUE_ON;
 
-	LOG_ERR("anx7533 chip power on %x\n", priv->chip_power_status);
+	LOG_INF("anx7533 chip power on %x\n", priv->chip_power_status);
 }
 
 void anx7533_chip_powerdown(const struct device *dev)
 {
-	LOG_ERR("anx7533 chip power down\n");
+	LOG_INF("anx7533 chip power down\n");
 	struct anx7533_priv *priv = (struct anx7533_priv *)(dev->data);
 	const struct anx7533_config *cfg = dev->config;
 
 	priv->chip_power_status = VALUE_OFF;
 
 	gpio_pin_set_dt(&cfg->vid_rst_pin, 0);
-	k_busy_wait(ANX7533_RESET_DOWN_DELAY*1000);
+	k_busy_wait(ANX7533_RESET_DOWN_DELAY*100);
 	gpio_pin_set_dt(&cfg->vid_en_pin, 0);
-	k_busy_wait(ANX7533_CHIPPOWER_DOWN_DELAY*1000);
+	k_busy_wait(ANX7533_CHIPPOWER_DOWN_DELAY*100);
 
-	LOG_ERR("anx7533 chip power off %x\n", priv->chip_power_status);
+	LOG_INF("anx7533 chip power off %x\n", priv->chip_power_status);
 }
 
 static void anx7533_set_checking_link_speed(const struct device *dev)
@@ -856,7 +854,7 @@ static void anx7533_interrupt_handle(const struct device *dev)
 	struct anx7533_irq_queue *irq_q = &priv->irq_q;
 	uint8_t queue0, queue1;
 
-	LOG_ERR("handle interrupt\n");
+	LOG_INF("handle interrupt\n");
 
 	if (irq_q->irq_q_input == irq_q->irq_q_output) {
 		LOG_ERR("queue empty\n");
@@ -866,7 +864,7 @@ static void anx7533_interrupt_handle(const struct device *dev)
 	queue0 = irq_q->q0[irq_q->irq_q_output];
 	queue1 = irq_q->q1[irq_q->irq_q_output];
 
-	LOG_INF("intrQ0=%02X, point=%d\n", queue0, irq_q->irq_q_output);
+	LOG_ERR("intrQ0=%02X, point=%d\n", queue0, irq_q->irq_q_output);
 
 	// Check AUX status
 	if (0 != (queue0 & AUX_CABLE_OUT)) {
@@ -1370,7 +1368,7 @@ static void anx7533_state_process(const struct device *dev)
 		// Clean interrupt queue
 		anx7533_irq_queue_clean(dev);
 
-		k_busy_wait(5000);
+		k_busy_wait(1000);
 
 		// power on Chicago power first
 		// move to next state
@@ -1380,8 +1378,7 @@ static void anx7533_state_process(const struct device *dev)
 	case ANX7533_STATE_WAITCABLE:
 		// DP cable plug-in
 		LOG_INF("STATE wait cable\n");
-		if ((DP_CABLE_IN == priv->dp_cable) ||
-		    (SIGNAL_LOW == anx7533_check_interrupt_state(dev))) {
+		if ((SIGNAL_LOW == anx7533_check_interrupt_state(dev))) {
 			priv->dp_cable = DP_CABLE_IN;
 
 			// RESET and POWER UP Chicago
@@ -1894,6 +1891,18 @@ static int anx7533_init_gpio(const struct device *dev)
 	}
 	gpio_pin_set_dt(&cfg->vid_rst_pin, 0);
 
+	if (!gpio_is_ready_dt(&cfg->pwr_en_pin)) {
+		LOG_ERR("Error: pwr enable pin not ready\n");
+		return -ENODEV;
+	}
+
+	err = gpio_pin_configure_dt(&cfg->pwr_en_pin, GPIO_OUTPUT);
+	if (err != 0) {
+		LOG_ERR("Error %d: failed to configure pwr enable pin\n", err);
+		return -ENODEV;
+	}
+	gpio_pin_set_dt(&cfg->pwr_en_pin, 0);
+
 	if (!gpio_is_ready_dt(&cfg->vid_int_pin)) {
 		LOG_ERR("Error: vid int pin is not ready\n");
 		return -ENODEV;
@@ -1987,6 +1996,7 @@ out:
 	static const struct anx7533_config anx7533_cfg_##n = {                 \
 		.bus = I2C_DT_SPEC_INST_GET(n),				       \
 		.vid_en_pin    = GPIO_DT_SPEC_INST_GET(n, vid_en_pin_gpios),   \
+		.pwr_en_pin = GPIO_DT_SPEC_INST_GET(n, pwr_1v0_en_gpios),  \
 		.vid_rst_pin = GPIO_DT_SPEC_INST_GET(n, vid_rst_pin_gpios),  \
 		.vid_int_pin =   GPIO_DT_SPEC_INST_GET(n, vid_int_pin_gpios),  \
 		.reg_offset =    DT_INST_PROP(n, reg_offset),		       \

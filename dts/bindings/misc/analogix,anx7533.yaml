@@ -12,6 +12,10 @@ properties:
     type: phandle-array
     description: |
       GPIO connected to video enable pin of anx7533.
+  pwr-1v0-en-gpios:
+    type: phandle-array
+    description: |
+      GPIO connected 1v0 pwr enable.
   vid-rst-pin-gpios:
     type: phandle-array
     description: |
