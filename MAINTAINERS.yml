@@ -161,10 +161,10 @@ ADI Platforms:
     - ozersa
     - ttmut
     - yasinustunerg
-    - galak
-    - microbuilder
+    - petejohanson-adi
   files:
     - boards/adi/
+    - boards/common/*adi*
     - boards/shields/eval*ardz/
     - boards/shields/pmod_acl/
     - drivers/*/*max*
@@ -172,9 +172,10 @@ ADI Platforms:
     - drivers/dac/dac_ltc*
     - drivers/ethernet/eth_adin*
     - drivers/ethernet/phy/phy_adin*
-    - drivers/mdio/mdio_adin*
+    - drivers/ethernet/mdio/mdio_adin*
     - drivers/sensor/adi/
     - drivers/stepper/adi_tmc/
+    - drivers/usb/udc/*max*
     - dts/arm/adi/
     - dts/bindings/*/adi,*
     - dts/bindings/*/lltc,*
@@ -303,6 +304,27 @@ Aesc Platform:
     - ^drivers/.*aesc(\.c)?$
   labels:
     - "platform: Aesc Silicon"
+
+Alif Semiconductor Platforms:
+  status: maintained
+  maintainers:
+    - silesh-alifsemi
+    - RupeshKumar-AlifSemi
+  collaborators:
+    - sudhir-alifsemi
+    - AnttiKauppila-AlifSemi
+    - VeijoPesonen
+  files:
+    - boards/alif/
+    - drivers/*/*alif*
+    - dts/arm/alif/
+    - dts/bindings/*/alif,*
+    - include/zephyr/dt-bindings/*/alif*.h
+    - soc/alif/
+  labels:
+    - "platform: Alif Semiconductor"
+  description: >-
+    Alif Semiconductor SoCs, device tree files, and related drivers.
 
 Ambiq Platforms:
   status: maintained
@@ -732,7 +754,6 @@ Boards/SoCs:
   files:
     - boards/
     - soc/
-    - dts/
   labels:
     - "area: Boards/SoCs"
   description: >-
@@ -757,7 +778,9 @@ Bouffalolab Platforms:
   collaborators:
     - josuah
   files:
+    - boards/aithinker/ai_*/
     - boards/bflb/
+    - boards/doiting/
     - boards/sipeed/maix_m0s_dock/
     - drivers/*/*bflb*
     - dts/riscv/bflb/
@@ -905,6 +928,8 @@ CPU Frequency Scaling:
   maintainers:
     - peter-mitsis
     - seankyer
+  collaborators:
+    - ZhaoxiangJin
   files:
     - include/zephyr/cpu_freq/
     - subsys/cpu_freq/
@@ -1173,7 +1198,6 @@ Disk:
     - danieldegrasse
   collaborators:
     - jfischer-no
-    - decsny
   files:
     - include/zephyr/storage/disk_access.h
     - include/zephyr/drivers/disk.h
@@ -1187,6 +1211,12 @@ Disk:
     - dts/bindings/sd/
     - dts/bindings/mmc/
     - dts/bindings/disk/
+  file-groups:
+    - name: eMMC
+      collaborators:
+        - decsny
+      files-regex:
+        - ^(?!.*sdmmc).*mmc
   labels:
     - "area: Disk Access"
   tests:
@@ -1279,6 +1309,7 @@ Documentation Infrastructure:
   collaborators:
     - anangl
     - ZhaoxiangJin
+    - jsbatch
   files:
     - drivers/adc/
     - include/zephyr/drivers/adc.h
@@ -1533,7 +1564,6 @@ Documentation Infrastructure:
   status: maintained
   maintainers:
     - kv2019i
-    - LaurentiuM1234
   collaborators:
     - lgirdwood
     - iuliana-prodan
@@ -1687,10 +1717,13 @@ Documentation Infrastructure:
     - dts/bindings/ethernet/
     - tests/drivers/ethernet/
     - include/zephyr/drivers/ethernet/
+    - include/zephyr/drivers/mdio.h
     - include/zephyr/net/phy.h
+    - include/zephyr/net/mdio.h
     - include/zephyr/net/mii.h
     - include/zephyr/net/ethernet.h
     - samples/drivers/ethernet/
+    - doc/hardware/peripherals/mdio.rst
   labels:
     - "area: Ethernet"
   tests:
@@ -1903,9 +1936,8 @@ Documentation Infrastructure:
 "Drivers: I3C":
   status: maintained
   maintainers:
-    - dcpleung
-  collaborators:
     - XenuIsWatching
+    - dcpleung
   files:
     - drivers/i3c/
     - dts/bindings/i3c/
@@ -1993,24 +2025,6 @@ Documentation Infrastructure:
     - "area: LED"
   tests:
     - drivers.led_strip
-
-"Drivers: MDIO":
-  status: maintained
-  maintainers:
-    - maass-hamburg
-  collaborators:
-    - decsny
-  files:
-    - doc/hardware/peripherals/mdio.rst
-    - drivers/mdio/
-    - include/zephyr/drivers/mdio.h
-    - include/zephyr/net/mdio.h
-    - tests/drivers/build_all/mdio/
-    - dts/bindings/mdio/
-  labels:
-    - "area: MDIO"
-  tests:
-    - drivers.mdio
 
 "Drivers: MEMC":
   status: odd fixes
@@ -2257,6 +2271,7 @@ Documentation Infrastructure:
     - anangl
     - henrikbrixandersen
     - FelixWang47831
+    - jsbatch
   files:
     - drivers/pwm/
     - dts/bindings/pwm/
@@ -2342,6 +2357,8 @@ Documentation Infrastructure:
     - dts/bindings/reset/
     - include/zephyr/dt-bindings/reset/
     - tests/drivers/reset/
+  labels:
+    - "area: Reset"
 
 "Drivers: Retained Memory":
   status: maintained
@@ -2484,13 +2501,11 @@ Documentation Infrastructure:
   collaborators:
     - bjarki-andreasen
     - dipakgmx
-    - fabiobaltieri
     - faxe1008
     - jbehrensnx
   files:
     - drivers/stepper/
     - include/zephyr/drivers/stepper/
-    - include/zephyr/drivers/stepper.h
     - dts/bindings/stepper/
     - doc/hardware/peripherals/stepper/
     - samples/drivers/stepper/
@@ -2666,7 +2681,7 @@ Documentation Infrastructure:
     - dts/bindings/wifi/nordic,nrf7000-spi.yaml
     - dts/bindings/wifi/nordic,nrf7001-qspi.yaml
     - dts/bindings/wifi/nordic,nrf7001-spi.yaml
-    - dts/bindings/wifi/nordic,nrf71-wifi.yaml
+    - dts/bindings/wifi/nordic,nrf7120-wifi.yaml
     - boards/shields/nrf7002ek/
   labels:
     - "area: Wi-Fi"
@@ -2776,6 +2791,10 @@ Espressif Platforms:
     - samples/boards/espressif/
     - tests/boards/espressif/
     - drivers/*/*esp32*/
+  file-groups:
+    - name: Espressif hosted Wi-Fi driver
+      files:
+        - drivers/wifi/esp_hosted
   labels:
     - "platform: ESP32"
 
@@ -3134,6 +3153,7 @@ JSON Web Token:
     - lib/utils/json.c
     - tests/subsys/jwt/
     - tests/lib/json/
+    - doc/services/jwt/index.rst
   labels:
     - "area: JSON"
   tests:
@@ -3188,6 +3208,24 @@ Kernel:
     - "area: Kernel"
   tests:
     - kernel
+
+Key-Value Storage Systems:
+  status: maintained
+  maintainers:
+    - rghaddab
+  collaborators:
+    - Laczen
+    - nashif
+    - LingaoM
+  files:
+    - include/zephyr/kvss/
+    - samples/subsys/kvss/
+    - subsys/kvss/
+    - tests/subsys/kvss/
+  labels:
+    - "area: Key-Value Storage Systems"
+  tests:
+    - keyvalstorage
 
 "Linkable Loadable Extensions":
   status: maintained
@@ -3616,6 +3654,7 @@ NXP Platform Wireless:
       collaborators:
         - MaochenWang1
       files:
+        - boards/shields/nxp_m2_wifi_bt/
         - drivers/wifi/
         - samples/net/
     - name: NXP IEEE802.15.4
@@ -3628,6 +3667,7 @@ NXP Platform Wireless:
     - name: MCXW platform
       collaborators:
         - axelnxp
+        - yeaissa
       files:
         - boards/nxp/*mcxw*/
         - soc/nxp/mcx/mcxw/
@@ -3635,6 +3675,7 @@ NXP Platform Wireless:
       collaborators:
         - MaochenWang1
         - axelnxp
+        - yeaissa
       files:
         - soc/nxp/rw/
         - boards/nxp/*rw*/
@@ -3735,6 +3776,45 @@ NXP Platforms (MCU):
         - boards/nxp/vmu*/
         - boards/nxp/rddrone_fmuk66/
         - tests/boards/vmu_rt1170/
+    - name: NXP Camera Shields
+      collaborators:
+        - ngphibang
+      files:
+        - boards/shields/nxp_btb44_ov5640/
+    - name: NXP Display Shields
+      collaborators:
+        - KATE-WANG-NXP
+      files:
+        - boards/shields/g1120b0mipi/
+        - boards/shields/lcd_par_s035/
+        - boards/shields/rk043fn02h_ct/
+        - boards/shields/rk043fn66hs_ctg/
+        - boards/shields/rk055hdmipi4m
+        - boards/shields/rk055hdmipi4ma0/
+        - boards/shields/zc143ac72mipi/
+    - name: NXP I3C Test Shields
+      collaborators:
+        - hakehuang
+      files:
+        - boards/shields/p3t1755dp_ard_i2c/
+        - boards/shields/p3t1755dp_ard_i3c/
+    - name: NXP MCU LPC11U6x
+      collaborators:
+        - simonguinot
+        - mbittan
+      files:
+        - boards/nxp/lpcxpresso11u68/
+        - soc/nxp/lpc/lpc11u6x/
+      files-regex:
+        - .*lpc11u6.*
+    - name: NXP MCU KE1xF
+      collaborators:
+        - henrikbrixandersen
+      files:
+        - boards/nxp/twr_ke18f/
+        - soc/nxp/kinetis/ke1xf/
+      files-regex:
+        - .*ke1*f.*
     - name: NXP MCU k32l
       collaborators:
         - iia
@@ -4393,13 +4473,13 @@ RISCV arch:
     - kgugala
     - tgorochowik
   collaborators:
-    - mgielda
-    - katsuster
     - edersondisouza
-    - npitre
-    - ycsin
-    - VynDragon
+    - katsuster
     - masz-nordic
+    - mgielda
+    - npitre
+    - VynDragon
+    - ycsin
   files:
     - arch/riscv/
     - boards/enjoydigital/litex_vexriscv/
@@ -4408,16 +4488,17 @@ RISCV arch:
     - boards/sifive/
     - boards/sparkfun/red_v_things_plus/
     - boards/starfive/
+    - doc/hardware/arch/risc-v.rst
+    - drivers/interrupt_controller/intc_plic.c
+    - drivers/interrupt_controller/intc_riscv_imsic.c
     - dts/bindings/riscv/
     - dts/riscv/
     - include/zephyr/arch/riscv/
     - soc/common/riscv-privileged/
+    - soc/qemu/virt_riscv/
     - soc/sifive/
     - soc/starfive/
-    - soc/qemu/virt_riscv/
     - tests/arch/riscv/
-    - doc/hardware/arch/risc-v.rst
-    - drivers/interrupt_controller/intc_plic.c
   labels:
     - "area: RISCV"
   tests:
@@ -4879,6 +4960,15 @@ Settings:
         - subsys/settings/include/settings/settings_zms.h
         - tests/subsys/settings/zms/
         - tests/subsys/settings/functional/zms/
+    - name: NVS backend
+      collaborators:
+        - Laczen
+        - LingaoM
+      files:
+        - subsys/settings/src/settings_nvs.c
+        - subsys/settings/include/settings/settings_nvs.h
+        - tests/subsys/settings/nvs/
+        - tests/subsys/settings/functional/nvs/
   labels:
     - "area: Settings"
   tests:
@@ -5038,10 +5128,10 @@ Storage ZMS:
   maintainers:
     - rghaddab
   files:
-    - subsys/fs/zms/
-    - include/zephyr/fs/zms.h
-    - samples/subsys/fs/zms/
-    - tests/subsys/fs/zms/
+    - subsys/kvss/zms/
+    - include/zephyr/kvss/zms.h
+    - samples/subsys/kvss/zms/
+    - tests/subsys/kvss/zms/
     - doc/services/storage/zms/zms.rst
 
 Synopsys Platforms:
@@ -6552,6 +6642,7 @@ nRF IronSide SE Platforms:
     - jonathannilsen
     - karstenkoenig
     - SebastianBoe
+    - kyberdin
   files:
     - modules/hal_nordic/ironside/
     - soc/nordic/common/uicr/
