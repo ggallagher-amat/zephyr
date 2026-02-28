@@ -1,5 +1,6 @@
 board:
   name: calico
+  full_name: AMAT Calico board
   vendor: amat
   socs:
-    - name: apollo4p
+  - name: 'apollo4p'
