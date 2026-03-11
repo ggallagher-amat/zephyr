@@ -372,6 +372,7 @@ int nxp_wifi_wlan_event_callback(enum wlan_event_reason reason, void *data)
 #ifndef CONFIG_WIFI_NM_HOSTAPD_AP
 		wifi_mgmt_raise_ap_disable_result_event(g_uap.netif, WIFI_STATUS_AP_SUCCESS);
 #endif
+		wlan_uap_bandcfg_recfg();
 		break;
 #endif
 	case WLAN_REASON_PS_ENTER:
@@ -2401,6 +2402,8 @@ static const struct zep_wpa_supp_dev_ops nxp_wifi_drv_ops = {
 	.remain_on_channel        = wifi_nxp_wpa_supp_remain_on_channel,
 	.cancel_remain_on_channel = wifi_nxp_wpa_supp_cancel_remain_on_channel,
 	.send_action_cancel_wait  = wifi_nxp_wpa_supp_cancel_action_wait,
+	.sched_scan               = wifi_nxp_wpa_supp_sched_scan,
+	.stop_sched_scan          = wifi_nxp_wpa_supp_stop_sched_scan,
 };
 #endif
 
