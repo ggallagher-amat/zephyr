@@ -20,6 +20,10 @@ properties:
     type: phandle-array
     description: |
       GPIO connected to video reset pin of anx7533.
+  sel-dsi-pin-gpios:
+    type: phandle-array
+    description: |
+      GPIO connected to sel dsi pin of anx7533.
   vid-int-pin-gpios:
     type: phandle-array
     description: |

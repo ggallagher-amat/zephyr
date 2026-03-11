@@ -64,6 +64,7 @@ struct anx7533_config {
 	struct gpio_dt_spec vid_en_pin;
 	struct gpio_dt_spec pwr_en_pin;
 	struct gpio_dt_spec vid_rst_pin;
+	struct gpio_dt_spec sel_dsi_pin;
 	struct gpio_dt_spec vid_int_pin;
 };
 
@@ -317,11 +318,11 @@ void anx7533_chip_poweron(const struct device *dev)
 
 	LOG_INF("anx7533 chip power on\n");
 
-	k_msleep(4);
+	k_msleep(2);
 	gpio_pin_set_dt(&cfg->pwr_en_pin, 1);
-	k_msleep(10);
+	k_msleep(5);
 	gpio_pin_set_dt(&cfg->vid_en_pin, 1);
-	k_msleep(45);
+	k_msleep(30);
 	gpio_pin_set_dt(&cfg->vid_rst_pin, 1);
 
 	priv->chip_power_status = VALUE_ON;
@@ -811,16 +812,13 @@ static void anx7533_irq(const struct device *dev, struct gpio_callback *cb, uint
 	const struct device *anx_dev = priv->anx_dev;
 	uint8_t reg_temp, reg_buf[2];
 
-	LOG_ERR("**interrupt from anx7533 %s\n", dev->name);
-
 	if (VALUE_ON == priv->chip_power_status) {
 		// this is not cable-in interrupt when CHIP_POWER_UP and RESET are low
 		// read 01:90 and 01:91 by i2c read block funciton
 		//anx7533_i2c_read_block(anx_dev, SLAVEID_SPI, INT_NOTIFY_MCU0, 2, &reg_buf[0]);
 		anx7533_i2c_read_byte(anx_dev, SLAVEID_SPI, INT_NOTIFY_MCU0, &reg_buf[0]);
 		anx7533_i2c_read_byte(anx_dev, SLAVEID_SPI, INT_NOTIFY_MCU1, &reg_buf[1]);
-		LOG_ERR("irq data0 %u irq data1 %u\n", reg_buf[0], reg_buf[1]);
-		LOG_ERR("input q size %u\n", priv->irq_q.irq_q_input);
+		LOG_DBG("irq data0 %u irq data1 %u\n", reg_buf[0], reg_buf[1]);
 		priv->irq_q.q0[priv->irq_q.irq_q_input] = reg_buf[0];
 		priv->irq_q.q1[priv->irq_q.irq_q_input] = reg_buf[1];
 
@@ -840,7 +838,6 @@ static void anx7533_irq(const struct device *dev, struct gpio_callback *cb, uint
 		reg_buf[1] = 0;
 		anx7533_i2c_write_block(anx_dev, SLAVEID_SPI, INT_NOTIFY_MCU0, 2, reg_buf);
 		// Clear interrupt
-		LOG_ERR("clear interrupt\n");
 		anx7533_i2c_read_byte(anx_dev, SLAVEID_DP_TOP, ADDR_SW_INTR_CTRL, &reg_temp);
 		reg_temp &= ~SOFT_INTR;
 		anx7533_i2c_write_byte(anx_dev, SLAVEID_DP_TOP, ADDR_SW_INTR_CTRL, reg_temp);
@@ -1908,6 +1905,18 @@ static int anx7533_init_gpio(const struct device *dev)
 		return -ENODEV;
 	}
 
+	if (!gpio_is_ready_dt(&cfg->sel_dsi_pin)) {
+		LOG_ERR("Error: sel dsi pin is not ready\n");
+		return -ENODEV;
+	}
+
+	err = gpio_pin_configure_dt(&cfg->sel_dsi_pin, GPIO_OUTPUT);
+	if (err != 0) {
+		LOG_ERR("Error %d: failed to configure sel dsi pin\n", err);
+		return -ENODEV;
+	}
+	gpio_pin_set_dt(&cfg->sel_dsi_pin, 0);
+
 	err = gpio_pin_configure_dt(&cfg->vid_int_pin, GPIO_INPUT);
 	if (err != 0) {
 		LOG_ERR("Error %d: failed to configure vid int pin\n", err);
@@ -1998,6 +2007,7 @@ out:
 		.vid_en_pin    = GPIO_DT_SPEC_INST_GET(n, vid_en_pin_gpios),   \
 		.pwr_en_pin = GPIO_DT_SPEC_INST_GET(n, pwr_1v0_en_gpios),  \
 		.vid_rst_pin = GPIO_DT_SPEC_INST_GET(n, vid_rst_pin_gpios),  \
+		.sel_dsi_pin = GPIO_DT_SPEC_INST_GET(n, sel_dsi_pin_gpios),  \
 		.vid_int_pin =   GPIO_DT_SPEC_INST_GET(n, vid_int_pin_gpios),  \
 		.reg_offset =    DT_INST_PROP(n, reg_offset),		       \
 		.reg_offset_rd = DT_INST_PROP(n, reg_offset_rd),	       \
