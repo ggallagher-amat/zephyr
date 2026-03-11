@@ -57,12 +57,17 @@
 		compatible = "regulator-fixed";
 		regulator-name = "EN_P1V8";
 		enable-gpios = <&gpio64_95 15 GPIO_ACTIVE_HIGH>;
-		regulator-boot-on;
 	};
 	ap_pwr_1v2_en {
 		compatible = "regulator-fixed";
 		regulator-name = "EN_P1V2";
 		enable-gpios = <&gpio64_95 14 GPIO_ACTIVE_HIGH>;
+		regulator-boot-on;
+	};
+	usb_mux_anx_en {
+		compatible = "regulator-fixed";
+		regulator-name = "EN_USB_MUX";
+		enable-gpios = <&gpio64_95 20 GPIO_ACTIVE_HIGH>;
 		regulator-boot-on;
 	};
 
@@ -116,6 +121,7 @@
 			compatible = "analogix,anx7533";
 			vid-rst-pin-gpios = <&gpio32_63 1 GPIO_ACTIVE_HIGH>;
 			vid-en-pin-gpios = <&gpio64_95 10 GPIO_ACTIVE_HIGH>;
+			sel-dsi-pin-gpios = <&gpio64_95 11 GPIO_ACTIVE_HIGH>;
 			pwr-1v0-en-gpios = <&gpio64_95 19 GPIO_ACTIVE_HIGH>;
 			vid-int-pin-gpios = <&gpio0_31 30 (GPIO_PULL_UP | GPIO_ACTIVE_HIGH)>;
 			reg = <0x54>;
@@ -137,7 +143,7 @@
 
 		anx7327_0@58 {
 			compatible = "analogix,anx7327";
-			int-pin-gpios = <&gpio0_31 10 (GPIO_PULL_UP | GPIO_ACTIVE_HIGH)>;
+			int-pin-gpios = <&gpio32_63 31 (GPIO_PULL_UP | GPIO_ACTIVE_HIGH)>;
 			reg = <0x58>;
 			i2c-addr-2 = <0x7E>;
 			status = "okay";
