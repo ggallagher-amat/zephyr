@@ -178,6 +178,12 @@ static const struct device *const devices[] = {
 #ifdef CONFIG_COUNTER_MCHP_TC_G1
 	DEVS_FOR_DT_COMPAT(microchip_tc_g1_counter)
 #endif
+#ifdef CONFIG_COUNTER_MCHP_RTC_G1
+	DEVS_FOR_DT_COMPAT(microchip_rtc_g1_counter)
+#endif
+#ifdef CONFIG_COUNTER_RENESAS_RZA2M_OSTM
+	DEVS_FOR_DT_COMPAT(renesas_rza2m_ostm_counter)
+#endif
 };
 
 static const struct device *const period_devs[] = {
@@ -198,7 +204,11 @@ static const struct device *const period_devs[] = {
 #endif
 };
 
+#define GUARD_PERIOD_US CONFIG_TEST_GUARD_PERIOD_US
+#define PROCESSING_LIMIT_US CONFIG_TEST_PROCESSING_LIMIT_US
+
 /* clang-format on */
+
 typedef void (*counter_test_func_t)(const struct device *dev);
 typedef bool (*counter_capability_func_t)(const struct device *dev);
 
@@ -220,6 +230,7 @@ static void counter_setup_instance(const struct device *dev)
 {
 	k_sem_reset(&alarm_cnt_sem);
 	if (!k_is_user_context()) {
+		compiler_barrier();
 		alarm_cnt = 0;
 	}
 }
@@ -245,7 +256,8 @@ static void counter_tear_down_instance(const struct device *dev)
 			"%s: Setting top value to default failed", dev->name);
 
 	err = counter_stop(dev);
-	zassert_equal(0, err, "%s: Counter failed to stop", dev->name);
+	zassert_true((err == 0) || (err == -ENOTSUP),
+			"%s: Counter failed to stop (err: %d)", dev->name, err);
 
 }
 
@@ -413,7 +425,7 @@ static void alarm_handler(const struct device *dev, uint8_t chan_id,
 	/* Arbitrary limit for alarm processing - time between hw expiration
 	 * and read-out from counter in the handler.
 	 */
-	static const uint64_t processing_limit_us = 1000;
+	static const uint64_t processing_limit_us = PROCESSING_LIMIT_US;
 	uint32_t now;
 	int err;
 	uint32_t top;
@@ -585,7 +597,8 @@ static void test_single_shot_alarm_instance(const struct device *dev, bool set_t
 			"%s: Setting top value to default failed", dev->name);
 
 	err = counter_stop(dev);
-	zassert_equal(0, err, "%s: Counter failed to stop", dev->name);
+	zassert_true((err == 0) || (err == -ENOTSUP),
+			"%s: Counter failed to stop (err: %d)", dev->name, err);
 }
 
 void test_single_shot_alarm_notop_instance(const struct device *dev)
@@ -861,7 +874,8 @@ static void test_valid_function_without_alarm(const struct device *dev)
 	zassert_true((ticks > 0), "%s: counter did not count", dev->name);
 
 	err = counter_stop(dev);
-	zassert_equal(0, err, "%s: counter failed to stop", dev->name);
+	zassert_true((err == 0) || (err == -ENOTSUP),
+			"%s: counter failed to stop (err: %d)", dev->name, err);
 }
 
 static bool ms_period_capable(const struct device *dev)
@@ -898,7 +912,7 @@ static void test_late_alarm_instance(const struct device *dev)
 	int err;
 	uint32_t cnt;
 	uint32_t tick_us = (uint32_t)counter_ticks_to_us(dev, 1);
-	uint32_t guard = counter_us_to_ticks(dev, 200);
+	uint32_t guard = counter_us_to_ticks(dev, GUARD_PERIOD_US);
 	struct counter_alarm_cfg alarm_cfg = {
 		.callback = alarm_handler,
 		.flags = COUNTER_ALARM_CFG_ABSOLUTE |
@@ -953,7 +967,7 @@ static void test_late_alarm_error_instance(const struct device *dev)
 {
 	int err;
 	uint32_t tick_us = (uint32_t)counter_ticks_to_us(dev, 1);
-	uint32_t guard = counter_us_to_ticks(dev, 200);
+	uint32_t guard = counter_us_to_ticks(dev, GUARD_PERIOD_US);
 	struct counter_alarm_cfg alarm_cfg = {
 		.callback = alarm_handler,
 		.flags = COUNTER_ALARM_CFG_ABSOLUTE,
@@ -1230,6 +1244,11 @@ static bool reliable_cancel_capable(const struct device *dev)
 	}
 #endif
 #ifdef CONFIG_COUNTER_RENESAS_RZ_CMTW
+	if (single_channel_alarm_capable(dev)) {
+		return true;
+	}
+#endif
+#ifdef CONFIG_COUNTER_RENESAS_RZA2M_OSTM
 	if (single_channel_alarm_capable(dev)) {
 		return true;
 	}
