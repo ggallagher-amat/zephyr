@@ -104,6 +104,8 @@ source "drivers/clock_control/Kconfig.max32"
 
 source "drivers/clock_control/Kconfig.ambiq"
 
+source "drivers/clock_control/Kconfig.alif"
+
 source "drivers/clock_control/Kconfig.pwm"
 
 source "drivers/clock_control/Kconfig.rpi_pico"
@@ -123,5 +125,7 @@ source "drivers/clock_control/Kconfig.mchp"
 source "drivers/clock_control/Kconfig.sf32lb_hxt48"
 
 source "drivers/clock_control/Kconfig.sf32lb_rcc"
+
+source "drivers/clock_control/Kconfig.alif"
 
 endif # CLOCK_CONTROL
