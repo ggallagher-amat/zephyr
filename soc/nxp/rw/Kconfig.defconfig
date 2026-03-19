@@ -20,12 +20,15 @@ config NXP_MONOLITHIC_NBU
 if MBEDTLS_PSA_CRYPTO_C
 
 config MCUX_ELS_PKC
+	bool
 	default y
 
 config MCUX_PSA_CRYPTO_DRIVER_ELS_PKC
+	bool
 	default y
 
 config MCUX_PSA_CRYPTO_DRIVER_ELS_PKC_THREAD
+	bool
 	default y
 
 config MBEDTLS_USER_CONFIG_ENABLE
