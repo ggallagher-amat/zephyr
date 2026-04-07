@@ -7,25 +7,40 @@
 #include <zephyr/dt-bindings/pinctrl/alif-ensemble-pinctrl.h>
 
 &pinctrl {
+
 	pinctrl_uart0: pinctrl_uart0 {
 		group0 {
-			pinmux = <PIN_P0_0__UART0_RX_A>;
+			pinmux = <PIN_P0_0__UART0_RX_A>, <PIN_P0_2__UART0_CTS_A>;
 			input-enable;
+			input-schmitt-enable;
+			drive-strength=<12>;
 		};
-
 		group1 {
-			pinmux = <PIN_P0_1__UART0_TX_A>;
+			pinmux = <PIN_P0_1__UART0_TX_A>, <PIN_P0_3__UART0_RTS_A>;
+			drive-strength=<12>;	
+		};
+		group2 {
+			pinmux = <PIN_P0_2__UART0_CTS_A>, <PIN_P0_3__UART0_RTS_A>;
+			bias-pull-up;
 		};
 	};
 
 	pinctrl_uart1: pinctrl_uart1 {
 		group0 {
-			pinmux = <PIN_P0_4__UART1_RX_A>;
+			pinmux = <PIN_P0_4__UART1_RX_A>, <PIN_P0_6__UART1_CTS_A>;
 			input-enable;
+			input-schmitt-enable;
+			slew-rate="fast";
 		};
-
 		group1 {
-			pinmux = <PIN_P0_5__UART1_TX_A>;
+			pinmux = <PIN_P0_5__UART1_TX_A>, <PIN_P0_7__UART1_RTS_A>;
+			drive-push-pull;
+			slew-rate="fast";
+			drive-strength=<12>;	
+		};
+		group2 {
+			pinmux = <PIN_P0_6__UART1_CTS_A>, <PIN_P0_7__UART1_RTS_A>;
+			bias-pull-up;
 		};
 	};
 
