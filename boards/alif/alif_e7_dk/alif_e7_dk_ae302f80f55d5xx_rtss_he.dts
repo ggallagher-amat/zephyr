@@ -59,6 +59,7 @@
 	status = "okay";
 };
 
+/*
 &ospi1 {
 	/* External Flash on OSPI */
 	ospi_flash: ospi_flash@0 {
@@ -83,3 +84,4 @@
 		status = "disabled";
 	};
 };
+*/

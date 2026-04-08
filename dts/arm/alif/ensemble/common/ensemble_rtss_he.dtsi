@@ -32,7 +32,7 @@
 		clocks = <&clockctrl ALIF_LPSPI_CLK>;
 		fifo-depth = <16>;
 		max-xfer-size = <32>;
-		rx-delay = <4>;
+		//rx-delay = <4>;
 		status = "disabled";
 	};
 
@@ -41,7 +41,6 @@
 		reg = <0x400C0000 0x1000>;
 		reg-names = "pl330_regs";
 		dma-channels = <8>;
-		#dma-cells = <2>;
 		interrupt-parent = <&nvic>;
 		interrupts = <0 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <1 ALIF_DEFAULT_IRQ_PRIORITY>,
@@ -82,7 +81,6 @@
 		pinctrl-0 = <&pinctrl_lpuart>;
 		pinctrl-1 = <&pinctrl_lpuart_sleep>;
 		pinctrl-names = "default", "sleep";
-		fifo-size = <32>;
 		status = "disabled";
 	};
 

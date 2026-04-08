@@ -118,14 +118,14 @@
 		max-bus-freq = <25000000U>;
 		min-bus-freq = <400000>;
 		power-delay-ms = <500>;
-		pinctrl-0 = <&pinctrl_sdmmc>;
-		pinctrl-names = "default";
-		cd-gpios = <&gpio3 3 GPIO_ACTIVE_LOW>;
-		mmc {
-			compatible = "zephyr,sdmmc-disk";
-			bus-width = <4>;
-			status = "disabled";
-		};
+		//pinctrl-0 = <&pinctrl_sdmmc>;
+		//pinctrl-names = "default";
+		//cd-gpios = <&gpio3 3 GPIO_ACTIVE_LOW>;
+		//mmc {
+		//	compatible = "zephyr,sdmmc-disk";
+		//	bus-width = <4>;
+		//	status = "disabled";
+		//};
 		status = "disabled";
 	};
 
@@ -310,7 +310,7 @@
 		pinctrl-0 = <&pinctrl_uart0>;
 		pinctrl-1 = <&pinctrl_uart0_sleep>;
 		pinctrl-names = "default", "sleep";
-		fifo-size = <32>;
+		//fifo-size = <32>;
 		status = "disabled";
 	};
 
@@ -326,7 +326,7 @@
 		pinctrl-0 = <&pinctrl_uart1>;
 		pinctrl-1 = <&pinctrl_uart1_sleep>;
 		pinctrl-names = "default", "sleep";
-		fifo-size = <32>;
+		//fifo-size = <32>;
 		status = "disabled";
 	};
 
@@ -342,7 +342,7 @@
 		pinctrl-0 = <&pinctrl_uart2>;
 		pinctrl-1 = <&pinctrl_uart2_sleep>;
 		pinctrl-names = "default", "sleep";
-		fifo-size = <32>;
+		//fifo-size = <32>;
 		status = "disabled";
 	};
 
@@ -358,7 +358,7 @@
 		pinctrl-0 = <&pinctrl_uart3>;
 		pinctrl-1 = <&pinctrl_uart3_sleep>;
 		pinctrl-names = "default", "sleep";
-		fifo-size = <32>;
+		//fifo-size = <32>;
 		status = "disabled";
 	};
 
@@ -374,7 +374,7 @@
 		pinctrl-0 = <&pinctrl_uart4>;
 		pinctrl-1 = <&pinctrl_uart4_sleep>;
 		pinctrl-names = "default", "sleep";
-		fifo-size = <32>;
+		//fifo-size = <32>;
 		status = "disabled";
 	};
 
@@ -390,12 +390,12 @@
 		pinctrl-0 = <&pinctrl_uart5>;
 		pinctrl-1 = <&pinctrl_uart5_sleep>;
 		pinctrl-names = "default", "sleep";
-		fifo-size = <32>;
+		//fifo-size = <32>;
 		status = "disabled";
 	};
 
 	spi0: spi@48103000 {
-		dwc-ssi;
+		//dwc-ssi;
 		compatible = "snps,designware-spi";
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -408,12 +408,12 @@
 		clocks = <&clockctrl ALIF_SPI_CLK>;
 		fifo-depth = <16>;
 		max-xfer-size = <32>;
-		rx-delay = <4>;
+		//rx-delay = <4>;
 		status = "disabled";
 	};
 
 	spi1: spi@48104000 {
-		dwc-ssi;
+		//dwc-ssi;
 		compatible = "snps,designware-spi";
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -426,12 +426,12 @@
 		clocks = <&clockctrl ALIF_SPI_CLK>;
 		fifo-depth = <16>;
 		max-xfer-size = <32>;
-		rx-delay = <4>;
+		//rx-delay = <4>;
 		status = "disabled";
 	};
 
 	spi2: spi@48105000 {
-		dwc-ssi;
+		//dwc-ssi;
 		compatible = "snps,designware-spi";
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -444,12 +444,12 @@
 		clocks = <&clockctrl ALIF_SPI_CLK>;
 		fifo-depth = <16>;
 		max-xfer-size = <32>;
-		rx-delay = <4>;
+		//rx-delay = <4>;
 		status = "disabled";
 	};
 
 	spi3: spi@48106000 {
-		dwc-ssi;
+		//dwc-ssi;
 		compatible = "snps,designware-spi";
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -462,7 +462,7 @@
 		clocks = <&clockctrl ALIF_SPI_CLK>;
 		fifo-depth = <16>;
 		max-xfer-size = <32>;
-		rx-delay = <4>;
+		//rx-delay = <4>;
 		status = "disabled";
 	};
 
@@ -471,7 +471,6 @@
 		reg = <0x49080000 0x1000>;
 		reg-names = "pl330_regs";
 		dma-channels = <8>;
-		#dma-cells = <2>;
 		interrupt-parent = <&nvic>;
 		interrupts = <299 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <300 ALIF_DEFAULT_IRQ_PRIORITY>,
@@ -1064,8 +1063,8 @@
 			     <184 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <185 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <186 ALIF_DEFAULT_IRQ_PRIORITY>;
-		pinctrl-0 = < &pinctrl_gpio0 >;
-		pinctrl-names = "default";
+		//pinctrl-0 = < &pinctrl_gpio0 >;
+		//pinctrl-names = "default";
 		gpio-controller;
 		#gpio-cells = <2>;
 		status = "disabled";
@@ -1083,8 +1082,8 @@
 			     <192 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <193 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <194 ALIF_DEFAULT_IRQ_PRIORITY>;
-		pinctrl-0 = < &pinctrl_gpio1 >;
-		pinctrl-names = "default";
+		//pinctrl-0 = < &pinctrl_gpio1 >;
+		//pinctrl-names = "default";
 		gpio-controller;
 		#gpio-cells = <2>;
 		status = "disabled";
@@ -1102,8 +1101,8 @@
 			     <200 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <201 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <202 ALIF_DEFAULT_IRQ_PRIORITY>;
-		pinctrl-0 = < &pinctrl_gpio2 >;
-		pinctrl-names = "default";
+		//pinctrl-0 = < &pinctrl_gpio2 >;
+		//pinctrl-names = "default";
 		gpio-controller;
 		#gpio-cells = <2>;
 		status = "disabled";
@@ -1121,8 +1120,8 @@
 			     <208 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <209 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <210 ALIF_DEFAULT_IRQ_PRIORITY>;
-		pinctrl-0 = < &pinctrl_gpio3 >;
-		pinctrl-names = "default";
+		//pinctrl-0 = < &pinctrl_gpio3 >;
+		//pinctrl-names = "default";
 		gpio-controller;
 		#gpio-cells = <2>;
 		status = "disabled";
@@ -1140,8 +1139,8 @@
 			     <216 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <217 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <218 ALIF_DEFAULT_IRQ_PRIORITY>;
-		pinctrl-0 = < &pinctrl_gpio4 >;
-		pinctrl-names = "default";
+		//pinctrl-0 = < &pinctrl_gpio4 >;
+		//pinctrl-names = "default";
 		gpio-controller;
 		#gpio-cells = <2>;
 		status = "disabled";
@@ -1159,8 +1158,8 @@
 			     <224 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <225 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <226 ALIF_DEFAULT_IRQ_PRIORITY>;
-		pinctrl-0 = < &pinctrl_gpio5 >;
-		pinctrl-names = "default";
+		//pinctrl-0 = < &pinctrl_gpio5 >;
+		//pinctrl-names = "default";
 		gpio-controller;
 		#gpio-cells = <2>;
 		status = "disabled";
@@ -1178,8 +1177,8 @@
 			     <232 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <233 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <234 ALIF_DEFAULT_IRQ_PRIORITY>;
-		pinctrl-0 = < &pinctrl_gpio6 >;
-		pinctrl-names = "default";
+		//pinctrl-0 = < &pinctrl_gpio6 >;
+		//pinctrl-names = "default";
 		gpio-controller;
 		#gpio-cells = <2>;
 		status = "disabled";
@@ -1197,8 +1196,8 @@
 			     <240 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <241 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <242 ALIF_DEFAULT_IRQ_PRIORITY>;
-		pinctrl-0 = < &pinctrl_gpio7 >;
-		pinctrl-names = "default";
+		//pinctrl-0 = < &pinctrl_gpio7 >;
+		//pinctrl-names = "default";
 		gpio-controller;
 		#gpio-cells = <2>;
 		status = "disabled";
@@ -1216,8 +1215,8 @@
 			     <248 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <249 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <250 ALIF_DEFAULT_IRQ_PRIORITY>;
-		pinctrl-0 = < &pinctrl_gpio8 >;
-		pinctrl-names = "default";
+		//pinctrl-0 = < &pinctrl_gpio8 >;
+		//pinctrl-names = "default";
 		gpio-controller;
 		#gpio-cells = <2>;
 		status = "disabled";
@@ -1235,8 +1234,8 @@
 			     <256 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <257 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <258 ALIF_DEFAULT_IRQ_PRIORITY>;
-		pinctrl-0 = < &pinctrl_gpio9 >;
-		pinctrl-names = "default";
+		//pinctrl-0 = < &pinctrl_gpio9 >;
+		//pinctrl-names = "default";
 		gpio-controller;
 		#gpio-cells = <2>;
 		status = "disabled";
@@ -1254,8 +1253,8 @@
 			     <176 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <177 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <178 ALIF_DEFAULT_IRQ_PRIORITY>;
-		pinctrl-0 = < &pinctrl_lpgpio >;
-		pinctrl-names = "default";
+		//pinctrl-0 = < &pinctrl_lpgpio >;
+		//pinctrl-names = "default";
 		gpio-controller;
 		#gpio-cells = <2>;
 		status = "disabled";
@@ -1550,8 +1549,8 @@
 		 */
 		hcnt-offset = <0>;
 		lcnt-offset = <0>;
-		fs-spike-len = <5>;
-		hs-spike-len = <1>;
+		//fs-spike-len = <5>;
+		//hs-spike-len = <1>;
 		#address-cells = <1>;
 		#size-cells = <0>;
 		reg = <0x49010000 0x1000>;
@@ -1560,8 +1559,8 @@
 		pinctrl-names = "default", "sleep";
 		interrupt-parent = <&nvic>;
 		interrupts = <132 ALIF_DEFAULT_IRQ_PRIORITY>;
-		tx_threshold = <16>;
-		rx_threshold = <0>;
+		//tx_threshold = <16>;
+		//rx_threshold = <0>;
 		status = "disabled";
 	};
 
@@ -1575,8 +1574,8 @@
 		 */
 		hcnt-offset = <0>;
 		lcnt-offset = <0>;
-		fs-spike-len = <5>;
-		hs-spike-len = <1>;
+		//fs-spike-len = <5>;
+		//hs-spike-len = <1>;
 		#address-cells = <1>;
 		#size-cells = <0>;
 		reg = <0x49011000 0x1000>;
@@ -1585,8 +1584,8 @@
 		pinctrl-names = "default", "sleep";
 		interrupt-parent = <&nvic>;
 		interrupts = <133 ALIF_DEFAULT_IRQ_PRIORITY>;
-		tx_threshold = <16>;
-		rx_threshold = <0>;
+		//tx_threshold = <16>;
+		//rx_threshold = <0>;
 		status = "disabled";
 	};
 

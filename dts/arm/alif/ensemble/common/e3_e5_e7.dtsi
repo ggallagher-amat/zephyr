@@ -24,7 +24,7 @@
 		pinctrl-0 = <&pinctrl_uart6>;
 		pinctrl-1 = <&pinctrl_uart6_sleep>;
 		pinctrl-names = "default", "sleep";
-		fifo-size = <32>;
+		//fifo-size = <32>;
 		status = "disabled";
 	};
 	uart7: uart@4901f000 {
@@ -39,7 +39,7 @@
 		pinctrl-0 = <&pinctrl_uart7>;
 		pinctrl-1 = <&pinctrl_uart7_sleep>;
 		pinctrl-names = "default", "sleep";
-		fifo-size = <32>;
+		//fifo-size = <32>;
 		status = "disabled";
 	};
 
@@ -55,8 +55,8 @@
 			     <264 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <265 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <266 ALIF_DEFAULT_IRQ_PRIORITY>;
-		pinctrl-0 = < &pinctrl_gpio10 >;
-		pinctrl-names = "default";
+		//pinctrl-0 = < &pinctrl_gpio10 >;
+		//pinctrl-names = "default";
 		gpio-controller;
 		#gpio-cells = <2>;
 		status = "disabled";
@@ -93,8 +93,8 @@
 			     <280 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <281 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <282 ALIF_DEFAULT_IRQ_PRIORITY>;
-		pinctrl-0 = < &pinctrl_gpio12 >;
-		pinctrl-names = "default";
+		//pinctrl-0 = < &pinctrl_gpio12 >;
+		//pinctrl-names = "default";
 		gpio-controller;
 		#gpio-cells = <2>;
 		status = "disabled";
@@ -112,8 +112,8 @@
 			     <288 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <289 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <290 ALIF_DEFAULT_IRQ_PRIORITY>;
-		pinctrl-0 = < &pinctrl_gpio13 >;
-		pinctrl-names = "default";
+		//pinctrl-0 = < &pinctrl_gpio13 >;
+		//pinctrl-names = "default";
 		gpio-controller;
 		#gpio-cells = <2>;
 		status = "disabled";
@@ -131,8 +131,8 @@
 			     <296 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <297 ALIF_DEFAULT_IRQ_PRIORITY>,
 			     <298 ALIF_DEFAULT_IRQ_PRIORITY>;
-		pinctrl-0 = < &pinctrl_gpio14 >;
-		pinctrl-names = "default";
+		//pinctrl-0 = < &pinctrl_gpio14 >;
+		//pinctrl-names = "default";
 		gpio-controller;
 		#gpio-cells = <2>;
 		status = "disabled";

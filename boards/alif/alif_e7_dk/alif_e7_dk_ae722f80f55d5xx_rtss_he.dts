@@ -75,9 +75,9 @@
 			erase-block-size = <DT_SIZE_K(4)>;
 			write-block-size = <2>;
 		};
-	}
+	};
 	status = "disabled";
-}
+};
 
 m2_hci_uart: &uart0 {
 	status = "okay";

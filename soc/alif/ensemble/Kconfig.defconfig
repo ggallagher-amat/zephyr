@@ -15,4 +15,5 @@ config SDHC_DESCRIPTOR_SECTION
 	default ".alif_ns"
 
 config I2C_DW_IC_CLK_FREQ_OPTIMIZATION
+	bool
 	default y if I2C_DW
