@@ -268,6 +268,7 @@ static int fw_upload_wait_for_hdr_sig(void)
 			k_msleep(1);
 			continue;
 		}
+
 		if ((c == V1_HEADER_DATA_REQ) || (c == V1_START_INDICATION) ||
 		    (c == V3_START_INDICATION) || (c == V3_HEADER_DATA_REQ)) {
 			LOG_DBG("HDR SIG found 0x%02X", c);
@@ -1018,7 +1019,7 @@ static int fw_uploading(const uint8_t *fw, uint32_t fw_length)
 						return err;
 					}
 				} else {
-					LOG_DBG("Error occurs %d", fw_upload.error);
+					LOG_ERR("Error occurs %d", fw_upload.error);
 					fw_upload_send_ack(V3_TIMEOUT_ACK);
 					if (fw_upload.error & BT_MIC_FAIL_BIT) {
 						fw_upload.change_speed_buffer_len = 0;
@@ -1029,7 +1030,8 @@ static int fw_uploading(const uint8_t *fw, uint32_t fw_length)
 			} else {
 				if (fw_upload.error == 0) {
 					fw_upload_send_ack(V3_REQUEST_ACK);
-					LOG_DBG("FW download done");
+					fw_upload_send_ack(V3_REQUEST_ACK);
+					LOG_ERR("FW download done");
 					return 0;
 				}
 				LOG_DBG("Error occurs %d", fw_upload.error);
