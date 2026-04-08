@@ -9,6 +9,7 @@ zephyr_library_sources_ifdef(CONFIG_HWINFO             hwinfo_weak_impl.c)
 zephyr_library_sources_ifdef(CONFIG_HWINFO_SHELL       hwinfo_shell.c)
 
 # zephyr-keep-sorted-start
+zephyr_library_sources_ifdef(CONFIG_HWINFO_AMBIQ       hwinfo_alif.c)
 zephyr_library_sources_ifdef(CONFIG_HWINFO_AMBIQ       hwinfo_ambiq.c)
 zephyr_library_sources_ifdef(CONFIG_HWINFO_ANDES       hwinfo_andes.c)
 zephyr_library_sources_ifdef(CONFIG_HWINFO_CC13XX_CC26XX hwinfo_cc13xx_cc26xx.c)

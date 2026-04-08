@@ -20,6 +20,7 @@ config CRC_DRIVER_INIT_PRIORITY
 	  CRC driver device initialization priority.
 
 source "drivers/crc/Kconfig.renesas_ra"
+source "drivers/crc/Kconfig.alif"
 
 config CRC_DRIVER_HAS_CRC4
 	bool

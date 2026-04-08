@@ -1,0 +1,15 @@
+# Copyright (c) 2025 Alif Semiconductor
+#
+# SPDX-License-Identifier: Apache-2.0
+
+config SOC_FAMILY
+	default "balletto" if SOC_FAMILY_BALLETTO
+
+config NONSECURE0_REGION
+	string
+	default "NON-SECURE0" if $(dt_nodelabel_enabled,ns)
+	help
+		Provide config name for Non-Secure0 region if
+		ns node defined in the device tree.
+
+rsource "*/Kconfig.soc"

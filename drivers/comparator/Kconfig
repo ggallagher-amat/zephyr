@@ -29,5 +29,6 @@ rsource "Kconfig.shell"
 rsource "Kconfig.renesas_ra"
 rsource "Kconfig.renesas_rx"
 rsource "Kconfig.stm32_comp"
+rsource "Kconfig.alif_comp"
 
 endif # COMPARATOR

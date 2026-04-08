@@ -46,6 +46,9 @@
 #define __imx_boot_dcd_section Z_GENERIC_SECTION(_IMX_BOOT_DCD_SECTION_NAME)
 #define __imx_boot_container_section Z_GENERIC_SECTION(_IMX_BOOT_CONTAINER_SECTION_NAME)
 #define __stm32_backup_sram_section Z_GENERIC_SECTION(_STM32_BACKUP_SRAM_SECTION_NAME)
+#define __alif_ns_section Z_GENERIC_SECTION(_ALIF_NS_SECTION_NAME)
+#define __alif_sram0_section Z_GENERIC_SECTION(_ALIF_SRAM0_SECTION_NAME)
+#define __alif_sram1_section Z_GENERIC_SECTION(_ALIF_SRAM1_SECTION_NAME)
 #endif /* CONFIG_ARM */
 
 #if defined(CONFIG_NOCACHE_MEMORY)

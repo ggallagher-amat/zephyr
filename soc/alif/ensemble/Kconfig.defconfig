@@ -1,0 +1,18 @@
+# Copyright (c) 2025 Alif Semiconductor
+#
+# SPDX-License-Identifier: Apache-2.0
+
+if SOC_FAMILY_ENSEMBLE
+rsource "*/Kconfig.defconfig"
+endif # SOC_FAMILY_ENSEMBLE
+
+config SD_BUFFER_SECTION
+	string "Alif Non Secure Section Name for card internal buffer"
+	default ".alif_ns"
+
+config SDHC_DESCRIPTOR_SECTION
+	string "Alif Non Secure Section Name for SDHC Descriptor"
+	default ".alif_ns"
+
+config I2C_DW_IC_CLK_FREQ_OPTIMIZATION
+	default y if I2C_DW
