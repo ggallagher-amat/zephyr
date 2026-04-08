@@ -15,6 +15,7 @@ zephyr_library_sources_ifdef(CONFIG_USERSPACE counter_handlers.c)
 # zephyr-keep-sorted-start
 zephyr_library_sources_ifdef(CONFIG_ACE_V1X_ART_COUNTER counter_ace_v1x_art.c)
 zephyr_library_sources_ifdef(CONFIG_ACE_V1X_RTC_COUNTER counter_ace_v1x_rtc.c)
+zephyr_library_sources_ifdef(CONFIG_COUNTER_ALIF_UTIMER counter_alif_utimer.c)
 zephyr_library_sources_ifdef(CONFIG_COUNTER_AMBIQ counter_ambiq_timer.c)
 zephyr_library_sources_ifdef(CONFIG_COUNTER_ANDES_ATCPIT100 counter_andes_atcpit100.c)
 zephyr_library_sources_ifdef(CONFIG_COUNTER_BEE_TIMER counter_bee_timer.c)
@@ -88,3 +89,4 @@ zephyr_library_sources_ifdef(CONFIG_COUNTER_XLNX_AXI_TIMER counter_xlnx_axi_time
 zephyr_library_sources_ifdef(CONFIG_TIMER_DTMR_CMSDK_APB timer_dtmr_cmsdk_apb.c)
 zephyr_library_sources_ifdef(CONFIG_TIMER_TMR_CMSDK_APB timer_tmr_cmsdk_apb.c)
 # zephyr-keep-sorted-stop
+

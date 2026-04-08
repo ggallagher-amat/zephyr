@@ -37,6 +37,7 @@ endif() # CONFIG_BUILD_ONLY_NO_BLOBS
 
 # zephyr-keep-sorted-start
 zephyr_library_sources_ifdef(CONFIG_BT_AMBIQ_HCI hci_ambiq.c apollox_blue.c)
+zephyr_library_sources_ifdef(CONFIG_BT_ALIF      hci_alif.c)
 zephyr_library_sources_ifdef(CONFIG_BT_BEE hci_bee.c)
 zephyr_library_sources_ifdef(CONFIG_BT_BFLB_BL70X hci_bflb_bl70x.c)
 zephyr_library_sources_ifdef(CONFIG_BT_CYW208XX hci_infineon_cyw208xx.c)
@@ -59,7 +60,6 @@ zephyr_library_sources_ifdef(CONFIG_BT_STM32WB0 hci_stm32wb0.c)
 zephyr_library_sources_ifdef(CONFIG_BT_STM32WBA hci_stm32wba.c)
 zephyr_library_sources_ifdef(CONFIG_BT_STM32_IPM ipm_stm32wb.c)
 zephyr_library_sources_ifdef(CONFIG_SOC_NRF5340_CPUAPP nrf53_support.c)
-# zephyr-keep-sorted-stop
 
 if(CONFIG_BT_USERCHAN)
   zephyr_library_sources(userchan.c)

@@ -14,6 +14,7 @@ endif()
 zephyr_library_include_directories_ifdef(CONFIG_MEMC_MSPI ${ZEPHYR_BASE}/drivers/mspi)
 
 # zephyr-keep-sorted-start
+zephyr_library_sources_ifdef(CONFIG_MEMC_ALIF_OSPI_APS512XXN memc_alif_opsi_aps512xxn.c)
 zephyr_library_sources_ifdef(CONFIG_MEMC_BFLB_BL61X memc_bflb_bl61x.c)
 zephyr_library_sources_ifdef(CONFIG_MEMC_HIFIVE_UNMATCHED_DRAM sifive_ddr.c)
 zephyr_library_sources_ifdef(CONFIG_MEMC_MAX32_HPB memc_max32_hpb.c)
@@ -40,3 +41,4 @@ zephyr_library_sources_ifdef(CONFIG_MEMC_STM32_OSPI_PSRAM memc_stm32_ospi_psram.
 zephyr_library_sources_ifdef(CONFIG_MEMC_STM32_SDRAM memc_stm32_sdram.c)
 zephyr_library_sources_ifdef(CONFIG_MEMC_STM32_XSPI_PSRAM memc_stm32_xspi_psram.c)
 # zephyr-keep-sorted-stop
+

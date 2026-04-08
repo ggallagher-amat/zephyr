@@ -3,6 +3,7 @@
 zephyr_library()
 
 # zephyr-keep-sorted-start
+zephyr_library_sources_ifdef(CONFIG_IEEE802154_ALIF		ieee802154_alif.c)
 zephyr_library_sources_ifdef(CONFIG_IEEE802154_CC1200 ieee802154_cc1200.c)
 zephyr_library_sources_ifdef(CONFIG_IEEE802154_CC13XX_CC26XX ieee802154_cc13xx_cc26xx.c)
 zephyr_library_sources_ifdef(CONFIG_IEEE802154_CC13XX_CC26XX_SUB_GHZ ieee802154_cc13xx_cc26xx_subg.c)
@@ -19,3 +20,4 @@ zephyr_library_sources_ifdef(CONFIG_IEEE802154_STM32WBA ieee802154_stm32wba.c)
 zephyr_library_sources_ifdef(CONFIG_IEEE802154_TELINK_B91 ieee802154_b91.c)
 zephyr_library_sources_ifdef(CONFIG_IEEE802154_UPIPE ieee802154_uart_pipe.c)
 # zephyr-keep-sorted-stop
+

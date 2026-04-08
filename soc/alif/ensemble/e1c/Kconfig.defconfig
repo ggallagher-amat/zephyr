@@ -1,8 +1,7 @@
-# SPDX-FileCopyrightText: Copyright Alif Semiconductor
+# Copyright (c) 2025 Alif Semiconductor
+#
 # SPDX-License-Identifier: Apache-2.0
 
 if SOC_SERIES_E1C
-
 rsource "Kconfig.defconfig.*"
-
-endif # SOC_SERIES_E1C
+endif

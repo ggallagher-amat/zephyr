@@ -7,6 +7,7 @@ zephyr_library()
 zephyr_library_sources_ifdef(CONFIG_USERSPACE ipm_handlers.c)
 
 # zephyr-keep-sorted-start
+zephyr_library_sources_ifdef(CONFIG_ALIF_HWSEM ipm_alif_hwsem.c)
 zephyr_library_sources_ifdef(CONFIG_ESP32_SOFT_IPM ipm_esp32.c)
 zephyr_library_sources_ifdef(CONFIG_IPM_IMX ipm_imx.c)
 zephyr_library_sources_ifdef(CONFIG_IPM_IVSHMEM ipm_ivshmem.c)

@@ -12,6 +12,7 @@ zephyr_library_sources_ifdef(CONFIG_DAC_AD559X dac_ad559x.c)
 zephyr_library_sources_ifdef(CONFIG_DAC_AD569X dac_ad569x.c)
 zephyr_library_sources_ifdef(CONFIG_DAC_AD56X1 dac_ad56x1.c)
 zephyr_library_sources_ifdef(CONFIG_DAC_AD56XX dac_ad56xx.c)
+zephyr_library_sources_ifdef(CONFIG_DAC_ALIF   dac_alif.c)
 zephyr_library_sources_ifdef(CONFIG_DAC_DAC161S997 dac_dac161s997.c)
 zephyr_library_sources_ifdef(CONFIG_DAC_DACX0501 dac_dacx0501.c)
 zephyr_library_sources_ifdef(CONFIG_DAC_DACX0508 dac_dacx0508.c)
@@ -39,3 +40,4 @@ zephyr_library_sources_ifdef(CONFIG_DAC_SILABS_VDAC dac_silabs_vdac.c)
 zephyr_library_sources_ifdef(CONFIG_DAC_STM32 dac_stm32.c)
 zephyr_library_sources_ifdef(CONFIG_DAC_TEST dac_test.c)
 # zephyr-keep-sorted-stop
+

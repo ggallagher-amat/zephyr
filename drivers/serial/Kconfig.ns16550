@@ -5,8 +5,8 @@ menuconfig UART_NS16550
 	default y
 	depends on DT_HAS_NS16550_ENABLED
 	select SERIAL_HAS_DRIVER
-	select SERIAL_SUPPORT_INTERRUPT if $(dt_compat_any_has_prop,$(DT_COMPAT_NS16550),interrupts)
-	select PINCTRL if $(dt_compat_any_has_prop,$(DT_COMPAT_NS16550),pinctrl-0)
+	select SERIAL_SUPPORT_INTERRUPT
+	select SERIAL_SUPPORT_ASYNC if DT_HAS_ARM_DMA_PL330_ENABLED
 	help
 	  This option enables the NS16550 serial driver.
 	  This driver can be used for the serial hardware
@@ -60,6 +60,15 @@ config UART_NS16550_VARIANT_NS16950
 	help
 	  This enables support for 128-bytes FIFO and automatic hardware flow control.
 endchoice
+
+config UART_NS16550_FIFO_SIZE
+	int
+	default 64 if UART_NS16550_VARIANT_NS16750
+	default 128 if UART_NS16550_VARIANT_NS16950
+	default 16
+	help
+		Size of UART FIFO buffer.
+
 
 config UART_NS16550_ACCESS_WORD_ONLY
 	bool "NS16550 only allows word access"

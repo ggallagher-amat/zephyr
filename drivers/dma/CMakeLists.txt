@@ -7,6 +7,7 @@ zephyr_library()
 # zephyr-keep-sorted-start
 zephyr_library_sources_ifdef(CONFIG_DMAMUX_STM32 dmamux_stm32.c)
 zephyr_library_sources_ifdef(CONFIG_DMA_ANDES_ATCDMACX00 dma_andes_atcdmacx00.c)
+zephyr_library_sources_ifdef(CONFIG_DMA_ALIF_EVENT_ROUTER	dma_alif_event_router.c)
 zephyr_library_sources_ifdef(CONFIG_DMA_BFLB dma_bflb.c)
 zephyr_library_sources_ifdef(CONFIG_DMA_DW dma_dw.c dma_dw_common.c)
 zephyr_library_sources_ifdef(CONFIG_DMA_DW_AXI dma_dw_axi.c)
@@ -64,3 +65,4 @@ zephyr_library_sources_ifdef(CONFIG_DMA_XILINX_AXI_DMA dma_xilinx_axi_dma.c)
 zephyr_library_sources_ifdef(CONFIG_DMA_XMC4XXX dma_xmc4xxx.c)
 zephyr_library_sources_ifdef(CONFIG_MCUX_PXP dma_mcux_pxp.c)
 # zephyr-keep-sorted-stop
+

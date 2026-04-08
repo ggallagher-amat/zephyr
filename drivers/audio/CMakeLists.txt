@@ -3,6 +3,7 @@
 zephyr_library()
 
 # zephyr-keep-sorted-start
+zephyr_library_sources_ifdef(CONFIG_ALIF_PDM    	alif_pdm.c)
 zephyr_library_sources_ifdef(CONFIG_AUDIO_CODEC_AW88298 aw88298.c)
 zephyr_library_sources_ifdef(CONFIG_AUDIO_CODEC_CS43L22 cs43l22.c)
 zephyr_library_sources_ifdef(CONFIG_AUDIO_CODEC_DA7212 da7212.c)
@@ -23,3 +24,4 @@ zephyr_library_sources_ifdef(CONFIG_AUDIO_TAS6422DAC tas6422dac.c)
 zephyr_library_sources_ifdef(CONFIG_AUDIO_TLV320AIC3110 tlv320aic3110.c)
 zephyr_library_sources_ifdef(CONFIG_AUDIO_TLV320DAC tlv320dac310x.c)
 # zephyr-keep-sorted-stop
+

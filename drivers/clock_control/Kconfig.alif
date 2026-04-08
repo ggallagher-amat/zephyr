@@ -7,3 +7,4 @@ config CLOCK_CONTROL_ALIF
 	depends on DT_HAS_ALIF_CLOCKCTRL_ENABLED
 	help
 	  Enable clock control driver for Alif Semiconductor SoCs.
+

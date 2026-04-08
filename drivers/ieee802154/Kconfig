@@ -85,6 +85,8 @@ source "drivers/ieee802154/Kconfig.stm32wba"
 source "drivers/ieee802154/Kconfig.uart_pipe"
 # zephyr-keep-sorted-stop
 
+source "drivers/ieee802154/Kconfig.alif"
+
 config IEEE802154_CSL_ENDPOINT
 	bool "Support for CSL Endpoint"
 	help

@@ -4,12 +4,12 @@ zephyr_syscall_header(${ZEPHYR_BASE}/include/zephyr/drivers/pwm.h)
 
 zephyr_library()
 
-zephyr_library_sources_ifdef(CONFIG_USERSPACE pwm_handlers.c)
 zephyr_library_sources_ifdef(CONFIG_PWM_CAPTURE pwm_capture.c)
 zephyr_library_sources_ifdef(CONFIG_PWM_SHELL pwm_shell.c)
 
 # zephyr-keep-sorted-start
 zephyr_library_sources_ifdef(CONFIG_MCPWM_ESP32 pwm_mc_esp32.c)
+zephyr_library_sources_ifdef(CONFIG_PWM_ALIF_UTIMER pwm_alif_utimer.c)
 zephyr_library_sources_ifdef(CONFIG_PWM_AMBIQ_CTIMER pwm_ambiq_ctimer.c)
 zephyr_library_sources_ifdef(CONFIG_PWM_AMBIQ_TIMER pwm_ambiq_timer.c)
 zephyr_library_sources_ifdef(CONFIG_PWM_BBLED_XEC pwm_mchp_xec_bbled.c)
