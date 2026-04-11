@@ -1010,6 +1010,8 @@ static int uart_ns16550_fifo_fill(const struct device *dev,
 	k_spinlock_key_t key = k_spin_lock(&data->lock);
 
 	for (i = 0; (i < size) && (i < data->fifo_size); i++) {
+		/* why exactly do I need this?? */
+		k_busy_wait(10);
 		ns16550_outbyte(dev_cfg, THR(dev), tx_data[i]);
 	}
 
@@ -1031,6 +1033,7 @@ static int uart_ns16550_fifo_read(const struct device *dev, uint8_t *rx_data,
 				  const int size)
 {
 	struct uart_ns16550_dev_data *data = dev->data;
+	int err;
 	int i;
 	k_spinlock_key_t key = k_spin_lock(&data->lock);
 

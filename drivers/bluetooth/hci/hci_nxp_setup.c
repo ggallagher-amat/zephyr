@@ -722,7 +722,9 @@ static int fw_upload_uart_reconfig(uint32_t speed, bool flow_control)
 	uart_irq_rx_disable(uart_dev);
 	uart_irq_tx_disable(uart_dev);
 	fw_upload_read_to_clear();
+	k_busy_wait(150);
 	err = uart_configure(uart_dev, &config);
+	k_busy_wait(150);
 	uart_irq_rx_enable(uart_dev);
 
 	return err;
@@ -1517,6 +1519,7 @@ int bt_h4_vnd_setup(const struct device *dev)
 		LOG_ERR("Fail to update uart bandrate");
 		return err;
 	}
+	(void)k_msleep(CONFIG_BT_H4_NXP_CTLR_WAIT_TIME_AFTER_BAUDRATE_UPDATE);
 
 	if (!fw_upload.is_setup_done) {
 		err = bt_nxp_set_calibration_data_annex55();
