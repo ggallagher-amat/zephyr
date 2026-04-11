@@ -8,25 +8,25 @@ config SOC_SERIES_E7
 config SOC_SERIES
 	default "e7" if SOC_SERIES_E7
 
-config SOC_AE722F80F55D5XX
+config SOC_AE722F80F55D5LS
 	bool
 	select SOC_SERIES_E7
 	help
 	  Alif Ensemble E7
 
-config SOC_AE722F80F55D5XX_RTSS_HE
+config SOC_AE722F80F55D5LS_RTSS_HE
 	bool
-	select SOC_AE722F80F55D5XX
+	select SOC_AE722F80F55D5LS
 	help
-	  SOC_AE722F80F55D5XX High Efficiency Real Time Subsystem (RTSS-HE).
+	  SOC_AE722F80F55D5LS High Efficiency Real Time Subsystem (RTSS-HE).
 	  Cortex-M55 core optimized for power efficiency with a maximum frequency of 160 MHz.
 
-config SOC_AE722F80F55D5XX_RTSS_HP
+config SOC_AE722F80F55D5LS_RTSS_HP
 	bool
-	select SOC_AE722F80F55D5XX
+	select SOC_AE722F80F55D5LS
 	help
-	  SOC_AE722F80F55D5XX High Performance Real Time Subsystem (RTSS-HP).
+	  SOC_AE722F80F55D5LS High Performance Real Time Subsystem (RTSS-HP).
 	  Cortex-M55 core optimized for compute performance with a maximum frequency of 400 MHz.
 
 config SOC
-	default "ae722f80f55d5xx" if SOC_AE722F80F55D5XX
+	default "ae722f80f55d5ls" if SOC_AE722F80F55D5LS

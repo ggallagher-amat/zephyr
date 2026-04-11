@@ -15,8 +15,8 @@ as two separate CPU clusters.
 
 To build for the above cores, use the following board targets (for Ensemble E8 SOC AE822FA0E5597LS0):
 
-* ``ensemble_e7_dk/ae722f80f55d5xx/rtss_hp``
-* ``ensemble_e7_dk/ae722f80f55d5xx/rtss_he``
+* ``ensemble_e7_dk/ae722f80f55d5LS/rtss_hp``
+* ``ensemble_e7_dk/ae722f80f55d5LS/rtss_he``
 
 More information about the board can be found at the
 `Ensemble E7 DevKit Product Page`_.
@@ -89,27 +89,27 @@ Building and flashing for the High Performance core (RTSS-HP):
 
 .. zephyr-app-commands::
    :zephyr-app: samples/hello_world
-   :board: ensemble_e7_dk/ae722f80f55d5xx/rtss_hp
+   :board: ensemble_e7_dk/ae722f80f55d5LS/rtss_hp
    :goals: build flash
 
 On the serial terminal, you should see the following message:
 
 .. code-block:: console
 
-   Hello World! ensemble_e7_dk/ae722f80f55d5xx/rtss_hp
+   Hello World! ensemble_e7_dk/ae722f80f55d5LS/rtss_hp
 
 Building and flashing for the High Efficiency core (RTSS-HE):
 
 .. zephyr-app-commands::
    :zephyr-app: samples/hello_world
-   :board: ensemble_e7_dk/ae722f80f55d5xx/rtss_he
+   :board: ensemble_e7_dk/ae722f80f55d5LS/rtss_he
    :goals: build flash
 
 On the serial terminal, you should see the following message:
 
 .. code-block:: console
 
-   Hello World! ensemble_e7_dk/ae722f80f55d5xx/rtss_he
+   Hello World! ensemble_e7_dk/ae722f80f55d5LS/rtss_he
 
 Debugging
 =========
@@ -118,7 +118,7 @@ You can debug an application using ``west debug``:
 
 .. zephyr-app-commands::
    :zephyr-app: samples/hello_world
-   :board: ensemble_e7_dk/ae722f80f55d5xx/rtss_hp
+   :board: ensemble_e7_dk/ae722f80f55d5LS/rtss_hp
    :maybe-skip-config:
    :goals: debug
 
@@ -130,4 +130,4 @@ References
 .. target-notes::
 
 .. _Ensemble E7 DevKit Product Page:
-   https://alifsemi.com/support/kits/ensemble-e8devkit/
+   https://alifsemi.com/support/kits/ensemble-e7devkit/

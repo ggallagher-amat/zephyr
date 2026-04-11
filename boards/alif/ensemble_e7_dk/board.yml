@@ -3,4 +3,4 @@ board:
   full_name: Alif Ensemble E7 Development Kit
   vendor: alif
   socs:
-  - name: ae722f80f55d5xx
+  - name: ae722f80f55d5ls

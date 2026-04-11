@@ -15,7 +15,7 @@ family:
               - name: rtss_hp
       - name: e7
         socs:
-          - name: ae722f80f55d5xx
+          - name: ae722f80f55d5ls
             cpuclusters:
               - name: rtss_he
               - name: rtss_hp
