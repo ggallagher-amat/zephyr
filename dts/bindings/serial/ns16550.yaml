@@ -21,3 +21,7 @@ properties:
   io-mapped:
     type: boolean
     description: specify registers are IO mapped or memory mapped
+
+  blocking_rw:
+    type: boolean
+    description: specify whether the UART operates in blocking mode

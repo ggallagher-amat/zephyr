@@ -102,6 +102,7 @@ BUILD_ASSERT(IS_ENABLED(CONFIG_PCIE), "NS16550(s) in DT need CONFIG_PCIE");
 #define REG_DLF 0xC0  /* Divisor Latch Fraction         */
 #define REG_PCP 0x200 /* PRV_CLOCK_PARAMS (Apollo Lake) */
 #define REG_MDR1 0x08 /* Mode control reg. (TI_K3) */
+#define REG_TFL 0x80  /* Transmit FIFO level */
 
 #if defined(CONFIG_UART_NS16550_INTEL_LPSS_DMA)
 #define REG_LPSS_SRC_TRAN 0xAF8 /* SRC Transfer LPSS DMA */
@@ -245,6 +246,12 @@ BUILD_ASSERT(IS_ENABLED(CONFIG_PCIE), "NS16550(s) in DT need CONFIG_PCIE");
 #define MSR_RI 0x40   /* complement of ring signal */
 #define MSR_DCD 0x80  /* complement of dcd */
 
+/* USR: uart status register */
+#define USR_TRANSMIT_FIFO_NOT_FULL      0x02
+#define USR_TRANSMIT_FIFO_EMPTY         0x04
+#define USR_RECEIVE_FIFO_NOT_EMPTY      0x08
+#define USR_RECEIVE_FIFO_FULL           0x10
+
 #define THR(dev) (get_port(dev) + (REG_THR * reg_interval(dev)))
 #define RDR(dev) (get_port(dev) + (REG_RDR * reg_interval(dev)))
 #define BRDL(dev) (get_port(dev) + (REG_BRDL * reg_interval(dev)))
@@ -260,6 +267,7 @@ BUILD_ASSERT(IS_ENABLED(CONFIG_PCIE), "NS16550(s) in DT need CONFIG_PCIE");
 #define USR(dev) (get_port(dev) + REG_USR)
 #define DLF(dev) (get_port(dev) + REG_DLF)
 #define PCP(dev) (get_port(dev) + REG_PCP)
+#define TFL(dev) (get_port(dev) + REG_TFL)
 
 #if defined(CONFIG_UART_NS16550_INTEL_LPSS_DMA)
 #define SRC_TRAN(dev) (get_port(dev) + REG_LPSS_SRC_TRAN)
@@ -363,6 +371,7 @@ struct uart_ns16550_dev_data {
 	struct uart_config uart_config;
 	struct k_spinlock lock;
 	uint8_t fifo_size;
+	bool blocking_rw;
 
 #ifdef CONFIG_UART_INTERRUPT_DRIVEN
 	uint8_t iir_cache;	/**< cache of IIR since it clears when read */
@@ -989,6 +998,65 @@ static int uart_ns16550_err_check(const struct device *dev)
 	return check >> 1;
 }
 
+/**
+ * @brief   Get available transmit fifo count
+ *
+ * @param   dev UART device struct
+ *
+ * @return  available transmit fifo count
+ */
+__maybe_unused
+ static inline int uart_ns16550_get_tx_fifo_available_count(const struct device *dev)
+{
+    struct uart_ns16550_dev_data *data = dev->data;
+
+    /* read tfl transmit FIFO level register,
+     *  TX_fifo available count = fifo depth - data entries in transmit fifo
+     */
+    return (data->fifo_size - sys_read8(TFL(dev)));
+}
+
+/**
+ * @brief   Check whether uart is ready to send; 1 ready, 0 not ready
+ *
+ * @param   dev UART device struct
+ *
+ * @return  1 ready to send, 0 not ready to send
+ */
+__maybe_unused
+ static inline int uart_ns16550_tx_ready(const struct device *dev)
+{
+    /* read TFNF transmitt_fifo_not_full bit from usr uart status register */
+    return ((sys_read8(USR(dev)) & USR_TRANSMIT_FIFO_NOT_FULL) ? 1 : 0);
+}
+
+/**
+ * @brief   Check whether uart is ready to send; 1 ready, 0 not ready
+ *
+ * @param   dev UART device struct
+ *
+ * @return  1 ready to send, 0 not ready to send
+ */
+__maybe_unused
+ static inline int uart_ns16550_tx_empty(const struct device *dev)
+{
+    return ((sys_read8(USR(dev)) & USR_TRANSMIT_FIFO_EMPTY) ? 1 : 0);
+}
+
+/**
+ * @brief   Check whether uart is ready to receive; 1 ready, 0 not ready
+ *
+ * @param   dev UART device struct
+ *
+ * @return  1 ready to receive, 0 not ready to receive
+ */
+__maybe_unused
+ static inline bool uart_ns16550_rx_ready(const struct device *dev)
+{
+    /* read RFNE receive_fifo_not_empty bit from usr uart status register */
+    return ((sys_read8(USR(dev)) & USR_RECEIVE_FIFO_NOT_EMPTY) ? 1 : 0);
+}
+
 #if CONFIG_UART_INTERRUPT_DRIVEN
 
 /**
@@ -1010,11 +1078,12 @@ static int uart_ns16550_fifo_fill(const struct device *dev,
 	k_spinlock_key_t key = k_spin_lock(&data->lock);
 
 	for (i = 0; (i < size) && (i < data->fifo_size); i++) {
-		/* why exactly do I need this?? */
-		k_busy_wait(10);
 		ns16550_outbyte(dev_cfg, THR(dev), tx_data[i]);
-	}
-
+		if (data->blocking_rw) {
+			/* wait for the fifo to empty */	
+			while(!uart_ns16550_tx_empty(dev));
+		}
+	}	
 	k_spin_unlock(&data->lock, key);
 
 	return i;
@@ -1033,7 +1102,6 @@ static int uart_ns16550_fifo_read(const struct device *dev, uint8_t *rx_data,
 				  const int size)
 {
 	struct uart_ns16550_dev_data *data = dev->data;
-	int err;
 	int i;
 	k_spinlock_key_t key = k_spin_lock(&data->lock);
 
@@ -1996,6 +2064,7 @@ static DEVICE_API(uart, uart_ns16550_driver_api) = {
 			COND_CODE_1(DT_INST_PROP_OR(n, hw_flow_control, 0),          \
 				    (UART_CFG_FLOW_CTRL_RTS_CTS),                    \
 				    (UART_CFG_FLOW_CTRL_NONE)),                      \
+		.blocking_rw = DT_INST_PROP_OR(n, blocking_rw, 0), 		 		\
 		IF_ENABLED(DT_INST_NODE_HAS_PROP(n, dlf),                            \
 			(.dlf = DT_INST_PROP_OR(n, dlf, 0),))			     \
 		DEV_DATA_ASYNC(n)						     \
