@@ -583,6 +583,8 @@ static void set_baud_rate(const struct device *dev, uint32_t baud_rate, uint32_t
 	}
 }
 
+static inline int uart_ns16550_tx_ready(const struct device *dev);
+static inline int uart_ns16550_rx_ready(const struct device *dev);
 static int uart_ns16550_configure(const struct device *dev,
 				  const struct uart_config *cfg)
 {
@@ -944,6 +946,11 @@ static int uart_ns16550_poll_in(const struct device *dev, unsigned char *c)
 	int ret = -1;
 	k_spinlock_key_t key = k_spin_lock(&data->lock);
 
+	if (data->blocking_rw) {
+		while (!uart_ns16550_rx_ready(dev)) {
+		}
+	}
+
 	ret = ns16550_read_char(dev, c);
 
 	k_spin_unlock(&data->lock, key);
@@ -951,6 +958,7 @@ static int uart_ns16550_poll_in(const struct device *dev, unsigned char *c)
 	return ret;
 }
 
+ static inline int uart_ns16550_tx_empty(const struct device *dev);
 /**
  * @brief Output a character in polled mode.
  *
@@ -974,7 +982,11 @@ static void uart_ns16550_poll_out(const struct device *dev,
 	}
 
 	ns16550_outbyte(dev_cfg, THR(dev), c);
-
+	if (data->blocking_rw) {
+		/* wait for the fifo to empty */
+			while(!uart_ns16550_tx_empty(dev)) {
+		}
+	}
 	k_spin_unlock(&data->lock, key);
 }
 
@@ -1051,7 +1063,7 @@ __maybe_unused
  * @return  1 ready to receive, 0 not ready to receive
  */
 __maybe_unused
- static inline bool uart_ns16550_rx_ready(const struct device *dev)
+ static inline int uart_ns16550_rx_ready(const struct device *dev)
 {
     /* read RFNE receive_fifo_not_empty bit from usr uart status register */
     return ((sys_read8(USR(dev)) & USR_RECEIVE_FIFO_NOT_EMPTY) ? 1 : 0);
@@ -1081,7 +1093,8 @@ static int uart_ns16550_fifo_fill(const struct device *dev,
 		ns16550_outbyte(dev_cfg, THR(dev), tx_data[i]);
 		if (data->blocking_rw) {
 			/* wait for the fifo to empty */	
-			while(!uart_ns16550_tx_empty(dev));
+			while(!uart_ns16550_tx_empty(dev)) {
+			}
 		}
 	}	
 	k_spin_unlock(&data->lock, key);
@@ -1104,6 +1117,11 @@ static int uart_ns16550_fifo_read(const struct device *dev, uint8_t *rx_data,
 	struct uart_ns16550_dev_data *data = dev->data;
 	int i;
 	k_spinlock_key_t key = k_spin_lock(&data->lock);
+
+	if (data->blocking_rw) {
+		while (!uart_ns16550_rx_ready(dev)) {
+		}
+	}
 
 	for (i = 0; (i < size) && (ns16550_read_char(dev, &rx_data[i]) != -1); i++) {
 	}

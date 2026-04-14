@@ -722,9 +722,9 @@ static int fw_upload_uart_reconfig(uint32_t speed, bool flow_control)
 	uart_irq_rx_disable(uart_dev);
 	uart_irq_tx_disable(uart_dev);
 	fw_upload_read_to_clear();
-	k_busy_wait(150);
+	/* TODO: WHY DO WE NEED THIS?*/
+	k_busy_wait(200);
 	err = uart_configure(uart_dev, &config);
-	k_busy_wait(150);
 	uart_irq_rx_enable(uart_dev);
 
 	return err;
