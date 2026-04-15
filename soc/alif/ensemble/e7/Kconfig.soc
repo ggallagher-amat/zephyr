@@ -28,5 +28,11 @@ config SOC_AE722F80F55D5LS_RTSS_HP
 	  SOC_AE722F80F55D5LS High Performance Real Time Subsystem (RTSS-HP).
 	  Cortex-M55 core optimized for compute performance with a maximum frequency of 400 MHz.
 
+config SOC_AE722F80F55D5XX_APSS
+	bool
+	select SOC_AE722F80F55D5LS
+	help
+	   SOC_AE722F80F55D5LS ARM CORTEX-A (APSS).
+
 config SOC
 	default "ae722f80f55d5ls" if SOC_AE722F80F55D5LS
