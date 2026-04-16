@@ -108,8 +108,8 @@ FUNC_NORETURN void z_prep_c(void)
 #if defined(CONFIG_CPU_HAS_FPU)
 	z_arm_floating_point_init();
 #endif
-	z_bss_zero();
-	z_data_copy();
+	arch_bss_zero();
+	arch_data_copy();
 #if ((defined(CONFIG_ARMV7_R) || defined(CONFIG_ARMV7_A) || defined(CONFIG_AARCH32_ARMV8_A)) \
 		 && defined(CONFIG_INIT_STACKS))
 	z_arm_init_stacks();
