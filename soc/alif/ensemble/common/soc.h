@@ -6,7 +6,7 @@
 #ifndef _SOC_ALIF_ENSEMBLE_SOC_H_
 #define _SOC_ALIF_ENSEMBLE_SOC_H_
 
-#if defined(CONFIG_SOC_FAMILY_ENSEMBLE_RTSS)
+#if defined(CONFIG_SOC_FAMILY_ENSEMBLE_RTSS_HE) || defined(CONFIG_SOC_FAMILY_ENSEMBLE_RTSS_HP)
 
 #include <cmsis_core_m_defaults.h>
 
