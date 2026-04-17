@@ -1,0 +1,11 @@
+# Copyright (c) 2025 Applied Materials Inc.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+identifier: mekong/ae722f80f55d5ls/rtss_hp
+name: Applied Materials Mekong MCU
+type: mcu
+arch: arm
+vendor: amat
+toolchain:
+  - zephyr

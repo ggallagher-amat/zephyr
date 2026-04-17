@@ -1,0 +1,6 @@
+board:
+  name: margarita
+  full_name: amat margarita board
+  vendor: amat
+  socs:
+  - name: ae722f80f55d5ls
