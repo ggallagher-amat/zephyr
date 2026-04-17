@@ -1,0 +1,30 @@
+/*
+ * Copyright (c) 2025 Applied Materials Inc
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+
+include <alif/ensemble/e7/ae722f80f55d5xx.dtsi>
+#include <alif/ensemble/common/ensemble_rtss_hp.dtsi>
+#include "mekong-pinctrl.dtsi"
+
+/ {
+	compatible = "arm,alif-e7-dk-ae722f80f55d5xx-rtss-hp";
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	chosen {
+		zephyr,flash = &mram_storage;
+		zephyr,code-partition = &slot0_partition;
+		zephyr,sram = &dtcm;
+		zephyr,console = &uart4;
+		zephyr,shell-uart = &uart4;
+		zephyr,uart-mcumgr = &uart4;
+	};
+};
+
+&uart4 {
+	status = "okay";
+};

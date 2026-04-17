@@ -1,0 +1,6 @@
+board:
+  name: mekong
+  full_name: AMAT mekong board
+  vendor: amat
+  socs:
+  - name: ae722f80f55d5xx
