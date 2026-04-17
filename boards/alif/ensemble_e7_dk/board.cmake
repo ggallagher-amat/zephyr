@@ -15,6 +15,8 @@ if(CONFIG_SOC_AE722F80F55D5LS_RTSS_HP)
 board_runner_args(alif_flash "--device=AE722F80F55D5_HP")
 elseif(CONFIG_SOC_AE722F80F55D5LS_RTSS_HE)
 board_runner_args(alif_flash "--device=AE722F80F55D5_HE")
+else()
+board_runner_args(alif_flash "--device=AE722F80F55D5_A32_0")
 endif()
 
 include(${ZEPHYR_BASE}/boards/common/alif_flash.board.cmake)

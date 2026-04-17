@@ -108,12 +108,15 @@ class AlifImageBinaryRunner(ZephyrBinaryRunner):
 
         self.logger.info("binary address %s and size %s KB", hex(fls_addr), fls_size)
 
-        if self.build_conf.getboolean('CONFIG_RTSS_HP'):
+        if self.build_conf.getboolean('CONFIG_SOC_FAMILY_ENSEMBLE_RTSS_HP'):
             self.logger.info("..build for HighPerformance Core")
             build_core = "hp"
-        else:
+        elif self.build_conf.getboolean('CONFIG_SOC_FAMILY_ENSEMBLE_RTSS_HE'):
             self.logger.info("..build for HighEfficency Core")
             build_core = "he"
+        else:
+            self.logger.info("..build for APSS Core")
+            build_core = "apss"
 
         shutil.copy(
             os.path.join(self.cfg.build_dir, 'zephyr', 'zephyr.bin'),
@@ -302,8 +305,10 @@ class AlifImageBinaryRunner(ZephyrBinaryRunner):
 
         if build_core == "hp":
             cpu_node = json_data["HP_APP"]
-        else:
+        elif build_core == "he":
             cpu_node = json_data["HE_APP"]
+        else:
+            cpu_node = json_data["A32_APP"]
 
         #update binary name
         cpu_node["binary"] = "zephyr.bin"
@@ -319,6 +324,7 @@ class AlifImageBinaryRunner(ZephyrBinaryRunner):
             cpu_node["flags"] = ["load","boot"]
 
         elif fls_addr >= cls.mram_base_addr and fls_addr <= cls.mram_base_addr + (fls_size * 1024):
+            logger.info(f"Using MRAM address 0x{fls_addr:x} for loading")
             del cpu_node['loadAddress']
             cpu_node['mramAddress'] = hex(fls_addr)
             cpu_node['flags'] = ["boot"]

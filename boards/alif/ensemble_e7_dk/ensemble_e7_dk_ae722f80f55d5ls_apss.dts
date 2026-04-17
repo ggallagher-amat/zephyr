@@ -5,6 +5,7 @@
 
 /dts-v1/;
 
+
 #include <freq.h>
 #include <arm64/armv8-a.dtsi>
 #include <mem.h>
@@ -18,9 +19,11 @@
 	#size-cells = <1>;
 
 	chosen {
+		zephyr,flash = &mram;
 		zephyr,sram = &sram0;
 		zephyr,console = &uart4;
 		zephyr,shell-uart = &uart4;
+		zephyr,code-partition = &slot0_partition;
 	};
 
 	cpus {
@@ -107,109 +110,16 @@
 			reg = <0x1A603000 0x00001000>, <0x42007000 0x00001000>;
 			reg-names = "pinctrl", "lpgpio_pinctrl";
 
-			pinctrl_uart0: pinctrl_uart0 {
-				group0 {
-					pinmux = <PIN_P0_0__UART0_RX_A>,
-						 <PIN_P0_1__UART0_TX_A>;
-				};
-			};
-
-			pinctrl_uart1: pinctrl_uart1 {
-				group0 {
-					pinmux = <PIN_P0_4__UART1_RX_A>,
-						 <PIN_P0_5__UART1_TX_A>;
-				};
-			};
-
-			pinctrl_uart2: pinctrl_uart2 {
-				group0 {
-					pinmux = <PIN_P1_0__UART2_RX_A>,
-						 <PIN_P1_1__UART2_TX_A>;
-				};
-			};
-
-			pinctrl_uart3: pinctrl_uart3 {
-				group0 {
-					pinmux = <PIN_P1_2__UART3_RX_A>,
-						 <PIN_P1_3__UART3_TX_A>;
-				};
-			};
-
 			pinctrl_uart4: pinctrl_uart4 {
+				group0 {
+					pinmux = <PIN_P12_1__UART4_RX_B>;
+					input-enable;
+				};
+
 				group1 {
-					pinmux = <PIN_P12_1__UART4_RX_B>,
-						 <PIN_P12_2__UART4_TX_B>;
+					pinmux = <PIN_P12_2__UART4_TX_B>;
 				};
 			};
-
-			pinctrl_uart5: pinctrl_uart5 {
-				group0 {
-					pinmux = <PIN_P3_4__UART5_RX_A>,
-						 <PIN_P3_5__UART5_TX_A>;
-				};
-			};
-
-			pinctrl_uart6: pinctrl_uart6 {
-				group0 {
-					pinmux = <PIN_P10_5__UART6_RX_A>,
-						 <PIN_P10_6__UART6_TX_A>;
-				};
-			};
-
-			pinctrl_uart7: pinctrl_uart7 {
-				group0 {
-					pinmux = <PIN_P9_3__UART7_RX_B>,
-						 <PIN_P9_4__UART7_TX_B>;
-				};
-			};
-		};
-
-		uart0: uart@49018000 {
-			compatible = "ns16550";
-			reg = <0x49018000 0x1000>;
-			clocks = <&clockctrl ALIF_UART0_SYST_PCLK>;
-			interrupts = <GIC_SPI 113 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>;
-			reg-shift = <2>;
-			current-speed = <115200>;
-			pinctrl-0 = <&pinctrl_uart0>;
-			pinctrl-names = "default";
-			status = "disabled";
-		};
-
-		uart1: uart@49019000 {
-			compatible = "ns16550";
-			reg = <0x49019000 0x1000>;
-			clocks = <&clockctrl ALIF_UART1_SYST_PCLK>;
-			interrupts = <GIC_SPI 114 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>;
-			reg-shift = <2>;
-			current-speed = <115200>;
-			pinctrl-0 = <&pinctrl_uart1>;
-			pinctrl-names = "default";
-			status = "disabled";
-		};
-
-		uart2: uart@4901a000 {
-			compatible = "ns16550";
-			reg = <0x4901a000 0x1000>;
-			clocks = <&clockctrl ALIF_UART2_SYST_PCLK>;
-			interrupts = <GIC_SPI 115 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>;
-			reg-shift = <2>;
-			current-speed = <115200>;
-			pinctrl-0 = <&pinctrl_uart2>;
-			pinctrl-names = "default";
-			status = "disabled";
-		};
-
-		uart3: uart@4901b000 {
-			compatible = "ns16550";
-			reg = <0x4901b000 0x1000>;
-			clocks = <&clockctrl ALIF_UART3_SYST_PCLK>;
-			interrupts = <GIC_SPI 116 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>;
-			reg-shift = <2>;
-			current-speed = <115200>;
-			pinctrl-0 = <&pinctrl_uart3>;
-			pinctrl-names = "default";
-			status = "disabled";
 		};
 
 		uart4: uart@4901c000 {
@@ -222,42 +132,6 @@
 			pinctrl-0 = <&pinctrl_uart4>;
 			pinctrl-names = "default";
 			status = "okay";
-		};
-
-		uart5: uart@4901d000 {
-			compatible = "ns16550";
-			reg = <0x4901d000 0x1000>;
-			clocks = <&clockctrl ALIF_UART5_SYST_PCLK>;
-			interrupts = <GIC_SPI 118 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>;
-			reg-shift = <2>;
-			current-speed = <115200>;
-			pinctrl-0 = <&pinctrl_uart5>;
-			pinctrl-names = "default";
-			status = "disabled";
-		};
-
-		uart6: uart@4901e000 {
-			compatible = "ns16550";
-			reg = <0x4901e000 0x1000>;
-			clocks = <&clockctrl ALIF_UART6_SYST_PCLK>;
-			interrupts = <GIC_SPI 119 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>;
-			reg-shift = <2>;
-			current-speed = <115200>;
-			pinctrl-0 = <&pinctrl_uart6>;
-			pinctrl-names = "default";
-			status = "disabled";
-		};
-
-		uart7: uart@4901f000 {
-			compatible = "ns16550";
-			reg = <0x4901f000 0x1000>;
-			clocks = <&clockctrl ALIF_UART7_SYST_PCLK>;
-			interrupts = <GIC_SPI 120 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>;
-			reg-shift = <2>;
-			current-speed = <115200>;
-			pinctrl-0 = <&pinctrl_uart7>;
-			pinctrl-names = "default";
-			status = "disabled";
 		};
 	};
 };
@@ -306,10 +180,24 @@
 			#clock-cells = <0>;
 		};
 		pll_clk1: pll-clk1 {
-			compatible = "alif,clock";
+			compatible = "fixed-clock";
 			clock-frequency = <800000000>;
 			status = "okay";
 			#clock-cells = <0>;
+		};
+	};
+};
+
+&mram {
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
+		slot0_partition: partition@0 {
+			label = "image-0";
+			reg = <0x0 DT_SIZE_K(5632)>;
 		};
 	};
 };

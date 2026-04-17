@@ -40,6 +40,7 @@ config SOC_FAMILY_ENSEMBLE_APSS
 	select GIC_V2
 	select PINCTRL
 	select CLOCK_CONTROL
+	select XIP
 
 rsource "*/Kconfig"
 
