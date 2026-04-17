@@ -1,0 +1,99 @@
+/*
+ * Copyright (c) 2025 Alif Semiconductor
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+
+#include <alif/ensemble/e7/ae722f80f55d5xx.dtsi>
+#include <alif/ensemble/common/ensemble_rtss_he.dtsi>
+#include "margarita-pinctrl.dtsi"
+
+/ {
+	compatible = "amat,margarita-ae722f80f55d5xx-rtss-he";
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	chosen {
+		zephyr,flash = &mram_storage;
+		zephyr,code-partition = &slot0_partition;
+		zephyr,sram = &dtcm;
+		zephyr,console = &uart2;
+		zephyr,shell-uart = &uart2;
+		zephyr,uart-mcumgr = &uart2;
+		zephyr,bt-hci = &bt_hci_uart;
+	};
+	
+	aliases {
+		wifi-3v3 = &wifi_3v3_en;
+		wifi-1v8 = &wifi_1v8_en;
+		wifi-pdn =    &wifi_pdn;
+		wifi-reset =  &wifi_reset;
+		bt-reset =    &bt_reset;
+		bt-wake-in =  &bt_wake_in;
+	};
+
+	pwr_gpios {
+		compatible = "amat,gen_gpios";
+		wifi_3v3_en: wifi_3v3_en {
+			gpio-name = "wifi_3v3_en";
+			gpios = <&gpio14 0 GPIO_ACTIVE_HIGH>;
+		};
+
+		wifi_1v8_en: wifi_1v8_en {
+			gpio-name = "wifi_1v8_en";
+			gpios = <&gpio14 0 GPIO_ACTIVE_HIGH>;
+		};
+
+		wifi_pdn: wifi_pdn {
+			gpio-name = "wifi_pdn";
+			gpios = <&gpio14 0 GPIO_ACTIVE_HIGH>;
+		};
+
+		wifi_reset: wifi_reset {
+			gpio-name = "wifi_reset";
+			gpios = <&gpio14 1 GPIO_ACTIVE_HIGH>;
+		};
+
+		bt_reset: bt_reset {
+			gpio-name = "bt_reset";
+			gpios = <&gpio14 1 GPIO_ACTIVE_HIGH>;
+		};
+		
+		bt_wake_in: bt_wake_in {
+			gpio-name = "bt_wake_in";
+			gpios = <&gpio14 1 GPIO_ACTIVE_HIGH>;
+		};
+	};
+};
+
+&gpio14 {
+	status = "okay";
+};
+
+&uart2 {
+	status = "okay";
+};
+
+m2_hci_uart: &uart1 {
+	hw-flow-control;
+	current-speed = <115200>;
+	status = "okay";
+	
+	bt_hci_uart: bt_hci_uart {
+		compatible = "zephyr,bt-hci-uart";
+		status = "okay";
+
+		m2_bt_module: m2_bt_module {
+		    compatible = "nxp,bt-hci-uart";
+		    sdio-reset-gpios = <&gpio14 1 GPIO_ACTIVE_HIGH>;
+		    w-disable-gpios = <&gpio14 0 GPIO_ACTIVE_HIGH>;
+		    hci-operation-speed = <115200>;
+		    hw-flow-control;
+            fw-download-primary-speed = <115200>;
+			fw-download-secondary-speed = <1000000>;
+			fw-download-secondary-flowcontrol;
+		};
+	};
+};

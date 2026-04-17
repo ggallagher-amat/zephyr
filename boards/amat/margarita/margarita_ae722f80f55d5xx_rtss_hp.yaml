@@ -1,0 +1,11 @@
+# Copyright (c) 2025 Applied Materials Inc.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+identifier: margarita/ae722f80f55d5xx/rtss_hp
+name: Applied Materials Margarita MCU
+type: mcu
+arch: arm
+vendor: amat
+toolchain:
+  - zephyr
