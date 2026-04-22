@@ -755,6 +755,8 @@ static int fw_upload_uart_reconfig(uint32_t speed, bool flow_control)
 	uart_irq_rx_disable(uart_dev);
 	uart_irq_tx_disable(uart_dev);
 	fw_upload_read_to_clear();
+	/* needed to clear to the UART FIFO */
+	k_busy_wait(200);
 	err = uart_configure(uart_dev, &config);
 	uart_irq_rx_enable(uart_dev);
 
